@@ -2,7 +2,7 @@
 
 <synapse-unit-test>
     <artifact>Sequence.xml</artifact>
-    <file-name>Sequence</file-name>
+    <filename>Sequence</filename>
     <artifact-type>sequence</artifact-type>
 
     <test-cases-count>1</test-cases-count>

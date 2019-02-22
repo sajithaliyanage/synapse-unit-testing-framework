@@ -18,17 +18,21 @@
 
 package org.wso2.synaps.unittest.client;
 
+import org.apache.log4j.BasicConfigurator;
+
 import java.util.logging.Logger;
 
 /**
  * Main class of the unit testing framework for synapse
  * Initialize and maintain the workflow of the framework
  */
-public class TestClient {
+public class UnitTestClient {
 
-    private static Logger log = Logger.getLogger(TestClient.class.getName());
+    private static Logger log = Logger.getLogger(UnitTestClient.class.getName());
 
     public static void main(String args[]){
+
+        BasicConfigurator.configure();
 
         String descriptorFilePath = args[0];
         String synapseHost = args[1];
@@ -36,6 +40,8 @@ public class TestClient {
 
         //create DescriptorFileReader object to read the descriptor file
         DescriptorFileReader descriptorReader = new DescriptorFileReader();
+        String data = descriptorReader.readArtifactData(descriptorFilePath);
+        log.info(data);
     }
 
 }
