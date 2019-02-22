@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<synapse-unit-test>
+    <artifact>Sequence.xml</artifact>
+    <file-name>Sequence</file-name>
+    <artifact-type>sequence</artifact-type>
+
+    <test-cases-count>1</test-cases-count>
+    <test-cases>
+        <test-case>
+            <input-xml-payload><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                                    + "   <soapenv:Header/>\n"
+                                    + "   <soapenv:Body>\n"
+                                    + "        <addCustomer>\n"
+                                    + "            <name>Smith</name>\n"
+                                    + "            <tpNumber>0834558649</tpNumber>\n"
+                                    + "            <address>No. 456, Gregory Road, Los Angeles</address>\n"
+                                    + "        </addCustomer>\n"
+                                    + "   </soapenv:Body>\n"
+                                    + "</soapenv:Envelope>]]>
+            </input-xml-payload>
+
+            <expected-property-values><![CDATA[<?xml version='1.0' encoding='utf-8'?>" +
+                                        "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
+                                        "<soapenv:Body>" + <echoInt> xmlns=\"http://echo.services.core.carbon.wso2.org\">"
+                                                + "      <!--0 to 1 occurrence-->" + "<in>35</in>" + "</echoInt> +
+                                            "</soapenv:Body></soapenv:Envelope>]]>
+            </expected-property-values>
+
+            <expected-payload>
+                <![CDATA[<soapenv:Body xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><a>newPayload</a></soapenv:Body>]]>
+            </expected-payload>
+
+        </test-case>
+    </test-cases>
+
+    <mock-services-count>1</mock-services-count>
+    <mock-services>
+        <mock-service>
+            <service-name>Hospital</service-name>
+            <mock-service-url>http://localhost:9090/query/doctor</mock-service-url>
+            <mock-service-type>POST</mock-service-type>
+            <mock-service-json-payload>
+                {
+                    "name":"John Smith",
+                    "age":23,
+                    "hospital":"Central Hospital"
+                }
+            </mock-service-json-payload>
+            <mock-service-expected-json-response>
+                {
+                    "hospital":"Central Hospital"
+                }
+            </mock-service-expected-json-response>
+        </mock-service>
+    </mock-services>
+</synapse-unit-test>
