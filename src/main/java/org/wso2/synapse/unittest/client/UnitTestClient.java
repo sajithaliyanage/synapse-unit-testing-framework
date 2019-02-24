@@ -16,11 +16,11 @@
  * under the License.
  */
 
-package org.wso2.synaps.unittest.client;
+package org.wso2.synapse.unittest.client;
 
-import org.apache.log4j.BasicConfigurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.logging.Logger;
 
 /**
  * Main class of the unit testing framework for synapse
@@ -28,11 +28,10 @@ import java.util.logging.Logger;
  */
 public class UnitTestClient {
 
-    private static Logger log = Logger.getLogger(UnitTestClient.class.getName());
+    private static Logger logger = LogManager.getLogger(UnitTestClient.class.getName());
+
 
     public static void main(String args[]){
-
-        BasicConfigurator.configure();
 
         String descriptorFilePath = args[0];
         String synapseHost = args[1];
@@ -41,7 +40,10 @@ public class UnitTestClient {
         //create DescriptorFileReader object to read the descriptor file
         DescriptorFileReader descriptorReader = new DescriptorFileReader();
         String data = descriptorReader.readArtifactData(descriptorFilePath);
-        log.info(data);
+        JSONConstructor js = new JSONConstructor();
+        js.setValues();
+
+        logger.info("Test Executor stopped");
     }
 
 }

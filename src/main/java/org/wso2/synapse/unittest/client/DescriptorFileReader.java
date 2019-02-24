@@ -16,22 +16,30 @@
  * under the License.
  */
 
-package org.wso2.synaps.unittest.client;
+package org.wso2.synapse.unittest.client;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
+import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.wso2.synapse.unittest.client.data.holders.ArtifactData;
 
+
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import static org.wso2.synapse.unittest.client.Constants.*;
 
 /**
  * Descriptor file read class in unit test framework
  */
 public class DescriptorFileReader {
 
-    private static Logger log = Logger.getLogger(DescriptorFileReader.class.getName());
+    private static Logger logger = LogManager.getLogger(UnitTestClient.class.getName());
 
     /**
      * Read artifact data from the descriptor file.
@@ -42,7 +50,7 @@ public class DescriptorFileReader {
      */
     String readArtifactData(String descriptorFilePath){
 
-        BasicConfigurator.configure();
+        ArtifactData artifactDataHolder = new ArtifactData();
 
         String inputXmlPayload;
         String artifactType;
@@ -52,15 +60,26 @@ public class DescriptorFileReader {
         String expectedPayload;
 
         try{
-            String fileString = FileUtils.readFileToString(new File(descriptorFilePath));
+            String descriptorFileAsString = FileUtils.readFileToString(new File(descriptorFilePath));
+            OMElement importXMLFile = AXIOMUtil.stringToOM(descriptorFileAsString);
 
-            log.info(fileString);
+            QName qualifiedTestCaseCount = new QName("", TEST_CASES_COUNT, "");
+            OMElement testCaseCountTag = importXMLFile.getFirstChildWithName(qualifiedTestCaseCount);
+            int testCaseCount = Integer.parseInt(testCaseCountTag.getText());
+            artifactDataHolder.setTestCaseCount(testCaseCount);
+            System.out.println(artifactDataHolder.getTestCaseCount());
+
 
         }catch (FileNotFoundException e){
-            log.error("Descriptor file not found in given path");
+            logger.error("Descriptor file not found in given path");
+        }catch (XMLStreamException e){
+            logger.error(e);
         }catch (IOException e){
-            log.error(e);
+            logger.error(e);
         }
+
+        logger.info("yes");
+
         return "";
     }
 

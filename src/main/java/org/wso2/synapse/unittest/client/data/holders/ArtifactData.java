@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.synaps.unittest.client.data.holders;
+package org.wso2.synapse.unittest.client.data.holders;
 
 public class ArtifactData {
 
@@ -25,6 +25,7 @@ public class ArtifactData {
     private String fileName;
     private String expectedPropertyValues;
     private String expectedPayload;
+    private int testCaseCount;
 
     public String getInputXmlPayload() {
         return inputXmlPayload;
@@ -50,6 +51,10 @@ public class ArtifactData {
         return expectedPayload;
     }
 
+    public int getTestCaseCount() {
+        return testCaseCount;
+    }
+
     public void setInputXmlPayload(String inputXmlPayload) {
         this.inputXmlPayload = inputXmlPayload;
     }
@@ -72,5 +77,9 @@ public class ArtifactData {
 
     public void setExpectedPayload(String expectedPayload) {
         this.expectedPayload = expectedPayload;
+    }
+
+    public void setTestCaseCount(int testCaseCount) {
+        this.testCaseCount =  testCaseCount;
     }
 }

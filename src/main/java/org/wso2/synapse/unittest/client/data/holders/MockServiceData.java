@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.synaps.unittest.client.data.holders;
+package org.wso2.synapse.unittest.client.data.holders;
 
 public class MockServiceData {
 
