@@ -24,6 +24,8 @@ import org.json.JSONObject;
 import org.wso2.synapse.unittest.client.data.holders.ArtifactData;
 import org.wso2.synapse.unittest.client.data.holders.TestCaseData;
 
+import java.util.Base64;
+
 import static org.wso2.synapse.unittest.client.Constants.*;
 
 /**
@@ -51,8 +53,8 @@ public class MessageConstructor {
             jsonDataHolder.initialize();
 
             //Add artifact data from data holder to json object
-            jsonDataHolder.setAttribute(ARTIFACT, artifactDataHolder.getArtifact());
-            jsonDataHolder.setAttribute(ARTIFACT_TYPE, artifactDataHolder.getArtifactType());
+            jsonDataHolder.setAttribute(ARTIFACT, Base64.getEncoder().encodeToString(artifactDataHolder.getArtifact().getBytes()));
+            jsonDataHolder.setAttribute(ARTIFACT_TYPE, Base64.getEncoder().encodeToString(artifactDataHolder.getArtifactType().getBytes()));
             jsonDataHolder.setAttribute(TEST_CASES_COUNT, artifactDataHolder.getTestCaseCount());
 
             //Add  test-case data from data holder to json object
@@ -63,9 +65,9 @@ public class MessageConstructor {
                 JSONConstructor jsonTestCaseDataHolder = new JSONConstructor();
                 jsonTestCaseDataHolder.initialize();
 
-                jsonTestCaseDataHolder.setAttribute(INPUT_XML_PAYLOAD, testCaseDataHolder.getInputXmlPayload(i));
-                jsonTestCaseDataHolder.setAttribute(EXPECTED_PROPERTY_VALUES, testCaseDataHolder.getExpectedPropertyValues(i));
-                jsonTestCaseDataHolder.setAttribute(EXPECTED_PAYLOAD, testCaseDataHolder.getExpectedPayload(i));
+                jsonTestCaseDataHolder.setAttribute(INPUT_XML_PAYLOAD, Base64.getEncoder().encodeToString(testCaseDataHolder.getInputXmlPayload(i).getBytes()));
+                jsonTestCaseDataHolder.setAttribute(EXPECTED_PROPERTY_VALUES, Base64.getEncoder().encodeToString(testCaseDataHolder.getExpectedPropertyValues(i).getBytes()));
+                jsonTestCaseDataHolder.setAttribute(EXPECTED_PAYLOAD, Base64.getEncoder().encodeToString(testCaseDataHolder.getExpectedPayload(i).getBytes()));
 
                 //Add test-case attributes to JSON array
                 jsonTestCaseDataHolderArray.setAttributeForArray(jsonTestCaseDataHolder.getJSONDataHolder());
