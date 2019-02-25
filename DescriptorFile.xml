@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <synapse-unit-test>
-    <artifact>Sequence.xml</artifact>
-    <filename>Sequence</filename>
+    <artifact>
+        <sequence xmlns="http://ws.apache.org/ns/synapse" name="conf:/StoreSend">
+            <axis2ns4:store xmlns:axis2ns4="http://ws.apache.org/ns/synapse" messageStore="JMSMS" sequence="conf:/repository/components/org.wso2.carbon.throttle/templates"></axis2ns4:store>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"></address>
+                </endpoint>
+            </send>
+        </sequence>
+    </artifact>
+
     <artifact-type>sequence</artifact-type>
 
-    <test-cases-count>1</test-cases-count>
+    <test-cases-count>2</test-cases-count>
     <test-cases>
-        <test-case>
+        <test-case-1>
             <input-xml-payload><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/\">\n"
                                     + "   <soapenv:Header/>\n"
                                     + "   <soapenv:Body>\n"
@@ -31,7 +40,19 @@
                 <![CDATA[<soapenv:Body xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><a>newPayload</a></soapenv:Body>]]>
             </expected-payload>
 
-        </test-case>
+        </test-case-1>
+        <test-case-2>
+            <input-xml-payload>Hi
+            </input-xml-payload>
+
+            <expected-property-values>test
+            </expected-property-values>
+
+            <expected-payload>
+                test2
+            </expected-payload>
+
+        </test-case-2>
     </test-cases>
 
     <mock-services-count>1</mock-services-count>

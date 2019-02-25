@@ -20,12 +20,86 @@ package org.wso2.synapse.unittest.client;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+/**
+ * Class of the JSON constructor for artifact data
+ */
 public class JSONConstructor {
 
-    private static Logger logger = LogManager.getLogger(UnitTestClient.class.getName());
+    private JSONObject jsonDataHolder;
+    private JSONArray jsonArrayDataHolder;
 
-    public void setValues(){
-        logger.info("JSON ADDED");
+    /**
+     * Initialized JSON object
+     */
+    public void initialize(){
+        jsonDataHolder = new JSONObject();
     }
+
+    /**
+     * Initialized JSON Array
+     */
+    public void initializeArray(){
+        jsonArrayDataHolder = new JSONArray();
+    }
+
+    /**
+     * Append key-value pairs into the JSON object initiated
+     *
+     * @param key JSON key
+     * @param value JSON string value of the key
+     */
+    public void setAttribute(String key, String value){
+        jsonDataHolder.put(key, value);
+    }
+
+    /**
+     * Append key-value pairs into the JSON Array Object initiated
+     *
+     * @param jsonArrayElement as child in the array
+     */
+    public void setAttributeForArray(JSONObject jsonArrayElement){
+        jsonArrayDataHolder.put(jsonArrayElement);
+    }
+
+    /**
+     * Append key-value pairs into the JSON object initiated
+     *
+     * @param key JSON key
+     * @param value JSON int value of the key
+     */
+    public void setAttribute(String key, int value){
+        jsonDataHolder.put(key, value);
+    }
+
+    /**
+     * Append key-value pairs into the JSON object initiated
+     *
+     * @param key JSON key
+     * @param value JSON value of the key
+     */
+    public void setAttribute(String key, JSONArray value){
+        jsonDataHolder.put(key, value);
+    }
+
+    /**
+     * Return JSON object
+     *
+     * @return JSONObject
+     */
+    public JSONObject getJSONDataHolder(){
+        return this.jsonDataHolder;
+    }
+
+    /**
+     * Return JSON array
+     *
+     * @return JSONArray
+     */
+    public JSONArray getJSONArrayDataHolder(){
+        return this.jsonArrayDataHolder;
+    }
+
 }

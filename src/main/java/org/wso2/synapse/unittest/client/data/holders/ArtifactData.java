@@ -19,17 +19,9 @@ package org.wso2.synapse.unittest.client.data.holders;
 
 public class ArtifactData {
 
-    private String inputXmlPayload;
     private String artifactType;
     private String artifact;
-    private String fileName;
-    private String expectedPropertyValues;
-    private String expectedPayload;
     private int testCaseCount;
-
-    public String getInputXmlPayload() {
-        return inputXmlPayload;
-    }
 
     public String getArtifactType() {
         return artifactType;
@@ -39,24 +31,8 @@ public class ArtifactData {
         return artifact;
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public String getExpectedPropertyValues() {
-        return expectedPropertyValues;
-    }
-
-    public String getExpectedPayload() {
-        return expectedPayload;
-    }
-
     public int getTestCaseCount() {
         return testCaseCount;
-    }
-
-    public void setInputXmlPayload(String inputXmlPayload) {
-        this.inputXmlPayload = inputXmlPayload;
     }
 
     public void setArtifactType(String artifactType) {
@@ -65,18 +41,6 @@ public class ArtifactData {
 
     public void setArtifact(String artifact) {
         this.artifact = artifact;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public void setExpectedPropertyValues(String expectedPropertyValues) {
-        this.expectedPropertyValues = expectedPropertyValues;
-    }
-
-    public void setExpectedPayload(String expectedPayload) {
-        this.expectedPayload = expectedPayload;
     }
 
     public void setTestCaseCount(int testCaseCount) {

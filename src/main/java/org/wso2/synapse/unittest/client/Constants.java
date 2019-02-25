@@ -29,7 +29,6 @@ public class Constants {
     public static final String INPUT_XML_PAYLOAD = "input-xml-payload";
     public static final String ARTIFACT_TYPE = "artifact-type";
     public static final String ARTIFACT = "artifact";
-    public static final String FILENAME = "filename";
     public static final String EXPECTED_PROPERTY_VALUES = "expected-property-values";
     public static final String EXPECTED_PAYLOAD = "expected-payload";
 
@@ -41,7 +40,5 @@ public class Constants {
     public static final String SERVICE_RESPONSE = "mock-service-expected-json-response";
     public static final String MOCK_SERVICES = "mock-services";
     public static final String MOCK_SERVICE = "mock-service";
-
-    public static final String LOG4J_CONF_PATH = "log4j.properties";
 
 }

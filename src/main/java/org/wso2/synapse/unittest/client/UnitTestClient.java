@@ -18,9 +18,12 @@
 
 package org.wso2.synapse.unittest.client;
 
+import com.cedarsoftware.util.io.JsonWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import org.json.JSONObject;
+import org.wso2.synapse.unittest.client.data.holders.ArtifactData;
+import org.wso2.synapse.unittest.client.data.holders.TestCaseData;
 
 /**
  * Main class of the unit testing framework for synapse
@@ -33,17 +36,24 @@ public class UnitTestClient {
 
     public static void main(String args[]){
 
+        logger.info("Unit testing client started");
+
         String descriptorFilePath = args[0];
         String synapseHost = args[1];
         String SynapseHostPort = args[2];
 
         //create DescriptorFileReader object to read the descriptor file
         DescriptorFileReader descriptorReader = new DescriptorFileReader();
-        String data = descriptorReader.readArtifactData(descriptorFilePath);
-        JSONConstructor js = new JSONConstructor();
-        js.setValues();
+        ArtifactData readArtifactData = descriptorReader.readArtifactData(descriptorFilePath);
+        TestCaseData readTestCaseData = descriptorReader.readTestCaseData(descriptorFilePath);
 
-        logger.info("Test Executor stopped");
+        MessageConstructor deployableMessage = new MessageConstructor();
+        JSONObject deployableJSON = deployableMessage.generateDeployMessage(readArtifactData, readTestCaseData);
+
+
+        System.out.println(JsonWriter.formatJson(deployableJSON.toString()));
+
+        logger.info("Unit testing client stopped");
     }
 
 }

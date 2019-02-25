@@ -24,7 +24,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.wso2.synapse.unittest.client.data.holders.ArtifactData;
-
+import org.wso2.synapse.unittest.client.data.holders.TestCaseData;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
@@ -48,27 +48,31 @@ public class DescriptorFileReader {
      * @param descriptorFilePath file path tom the descriptor file
      * @return dataHolder object with artifact data
      */
-    String readArtifactData(String descriptorFilePath){
+    ArtifactData readArtifactData(String descriptorFilePath){
 
         ArtifactData artifactDataHolder = new ArtifactData();
-
-        String inputXmlPayload;
-        String artifactType;
-        String artifact;
-        String fileName;
-        String expectedPropertyValues;
-        String expectedPayload;
 
         try{
             String descriptorFileAsString = FileUtils.readFileToString(new File(descriptorFilePath));
             OMElement importXMLFile = AXIOMUtil.stringToOM(descriptorFileAsString);
 
+            //Read test case count from descriptor file
             QName qualifiedTestCaseCount = new QName("", TEST_CASES_COUNT, "");
-            OMElement testCaseCountTag = importXMLFile.getFirstChildWithName(qualifiedTestCaseCount);
-            int testCaseCount = Integer.parseInt(testCaseCountTag.getText());
-            artifactDataHolder.setTestCaseCount(testCaseCount);
-            System.out.println(artifactDataHolder.getTestCaseCount());
+            OMElement testCaseCountNode = importXMLFile.getFirstChildWithName(qualifiedTestCaseCount);
+            int testCasesCount = Integer.parseInt(testCaseCountNode.getText());
+            artifactDataHolder.setTestCaseCount(testCasesCount);
 
+            //Read artifact from descriptor file
+            QName qualifiedArtifact = new QName("", ARTIFACT, "");
+            OMElement artifactNode = importXMLFile.getFirstChildWithName(qualifiedArtifact);
+            String artifact = artifactNode.getFirstElement().toString();
+            artifactDataHolder.setArtifact(artifact);
+
+            //Read artifact type from descriptor file
+            QName qualifiedArtifactType = new QName("", ARTIFACT_TYPE, "");
+            OMElement artifactTypeNode = importXMLFile.getFirstChildWithName(qualifiedArtifactType);
+            String artifactType = (artifactTypeNode.getText());
+            artifactDataHolder.setArtifactType(artifactType);
 
         }catch (FileNotFoundException e){
             logger.error("Descriptor file not found in given path");
@@ -76,11 +80,73 @@ public class DescriptorFileReader {
             logger.error(e);
         }catch (IOException e){
             logger.error(e);
+        }catch (Exception e){
+            logger.error(e);
         }
 
-        logger.info("yes");
+        logger.info("Artifact data from descriptor file read successfully");
+        return artifactDataHolder;
+    }
 
-        return "";
+    /**
+     * Read test-case data from the descriptor file.
+     * Append test-case data into the test data holder object
+     *
+     * @param descriptorFilePath file path tom the descriptor file
+     * @return testCaseDataHolder object with test case data
+     */
+    TestCaseData readTestCaseData(String descriptorFilePath){
+
+        TestCaseData testCaseDataHolder = new TestCaseData();
+
+        try {
+            String descriptorFileAsString = FileUtils.readFileToString(new File(descriptorFilePath));
+            OMElement importXMLFile = AXIOMUtil.stringToOM(descriptorFileAsString);
+
+            //Read test case count from descriptor file
+            QName qualifiedTestCaseCount = new QName("", TEST_CASES_COUNT, "");
+            OMElement testCaseCountNode = importXMLFile.getFirstChildWithName(qualifiedTestCaseCount);
+            int testCasesCount = Integer.parseInt(testCaseCountNode.getText());
+
+            //Read test cases from descriptor file
+            QName qualifiedTestCases = new QName("", TEST_CASES, "");
+            OMElement testCasesNode = importXMLFile.getFirstChildWithName(qualifiedTestCases);
+
+            //Iterate through test-cases in descriptor file
+            for(int i=0; i < testCasesCount; i++){
+                //Read test case from test-cases parent
+                QName qualifiedTestCase = new QName("", TEST_CASE+"-"+(i+1), "");
+                OMElement testCaseNode = testCasesNode.getFirstChildWithName(qualifiedTestCase);
+
+                //Read input-xml-payload child attribute from test-case node
+                QName qualifiedInputXMLPayload = new QName("", INPUT_XML_PAYLOAD, "");
+                OMElement inputXMLPayloadNode = testCaseNode.getFirstChildWithName(qualifiedInputXMLPayload);
+                String inputXMLPayload = inputXMLPayloadNode.getText();
+                testCaseDataHolder.addInputXmlPayload(inputXMLPayload);
+
+                //Read expected-payload child attribute from test-case node
+                QName qualifiedExpectedPayload = new QName("", EXPECTED_PAYLOAD, "");
+                OMElement ExpectedPayloadNode = testCaseNode.getFirstChildWithName(qualifiedExpectedPayload);
+                String ExpectedPayload = ExpectedPayloadNode.getText();
+                testCaseDataHolder.addExpectedPayload(ExpectedPayload);
+
+                //Read expected-property-values child attribute from test-case node
+                QName qualifiedExpectedPropertyValues = new QName("", EXPECTED_PROPERTY_VALUES, "");
+                OMElement ExpectedPropertyValuesNode = testCaseNode.getFirstChildWithName(qualifiedExpectedPropertyValues);
+                String ExpectedPropertyValues = ExpectedPropertyValuesNode.getText();
+                testCaseDataHolder.addExpectedPropertyValues(ExpectedPropertyValues);
+            }
+
+        } catch (FileNotFoundException e) {
+            logger.error("Descriptor file not found in given path");
+        } catch (XMLStreamException e) {
+            logger.error(e);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+
+        logger.info("Test case data from descriptor file read successfully");
+        return testCaseDataHolder;
     }
 
 }
