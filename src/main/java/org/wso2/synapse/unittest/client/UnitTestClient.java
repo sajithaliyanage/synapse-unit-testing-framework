@@ -40,7 +40,7 @@ public class UnitTestClient {
 
         String descriptorFilePath = args[0];
         String synapseHost = args[1];
-        String SynapseHostPort = args[2];
+        String SynapsePort = args[2];
 
         //create DescriptorFileReader object to read the descriptor file
         DescriptorFileReader descriptorReader = new DescriptorFileReader();
@@ -50,8 +50,8 @@ public class UnitTestClient {
         MessageConstructor deployableMessage = new MessageConstructor();
         JSONObject deployableJSON = deployableMessage.generateDeployMessage(readArtifactData, readTestCaseData);
 
-
-        System.out.println(JsonWriter.formatJson(deployableJSON.toString()));
+        TCPClient tcpClient = new TCPClient(synapseHost, SynapsePort);
+        tcpClient.writeData(deployableJSON);
 
         logger.info("Unit testing client stopped");
     }
