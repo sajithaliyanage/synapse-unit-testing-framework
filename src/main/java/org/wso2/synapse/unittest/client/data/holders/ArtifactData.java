@@ -22,9 +22,14 @@ public class ArtifactData {
     private String artifactType;
     private String artifact;
     private int testCaseCount;
+    private String artifactName;
 
     public String getArtifactType() {
         return artifactType;
+    }
+
+    public String getArtifactName() {
+        return artifactName;
     }
 
     public String getArtifact() {
@@ -37,6 +42,10 @@ public class ArtifactData {
 
     public void setArtifactType(String artifactType) {
         this.artifactType = artifactType;
+    }
+
+    public void setArtifactName(String artifactName) {
+        this.artifactName = artifactName;
     }
 
     public void setArtifact(String artifact) {

@@ -74,6 +74,12 @@ public class DescriptorFileReader {
             String artifactType = (artifactTypeNode.getText());
             artifactDataHolder.setArtifactType(artifactType);
 
+            //Read artifact type from descriptor file
+            QName qualifiedArtifactName = new QName("", ARTIFACT_NAME, "");
+            OMElement artifactNameNode = importXMLFile.getFirstChildWithName(qualifiedArtifactName);
+            String artifactName = (artifactNameNode.getText());
+            artifactDataHolder.setArtifactName(artifactName);
+
         }catch (FileNotFoundException e){
             logger.error("Descriptor file not found in given path");
         }catch (XMLStreamException e){

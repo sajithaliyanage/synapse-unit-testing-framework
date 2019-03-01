@@ -19,7 +19,7 @@
 package org.wso2.synapse.unittest.client;
 
 /**
- * Contants for unit testing framework for synapse
+ * Constants for unit testing framework for synapse
  */
 public class Constants {
 
@@ -28,6 +28,7 @@ public class Constants {
     public static final String TEST_CASES_COUNT = "test-cases-count";
     public static final String INPUT_XML_PAYLOAD = "input-xml-payload";
     public static final String ARTIFACT_TYPE = "artifact-type";
+    public static final String ARTIFACT_NAME = "artifact-name";
     public static final String ARTIFACT = "artifact";
     public static final String EXPECTED_PROPERTY_VALUES = "expected-property-values";
     public static final String EXPECTED_PAYLOAD = "expected-payload";

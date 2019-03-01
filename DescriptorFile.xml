@@ -12,6 +12,7 @@
         </sequence>
     </artifact>
 
+    <artifact-name>conf:/StoreSend</artifact-name>
     <artifact-type>sequence</artifact-type>
 
     <test-cases-count>2</test-cases-count>

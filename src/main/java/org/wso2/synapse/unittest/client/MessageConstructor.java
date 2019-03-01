@@ -55,6 +55,7 @@ public class MessageConstructor {
             //Add artifact data from data holder to json object
             jsonDataHolder.setAttribute(ARTIFACT, Base64.getEncoder().encodeToString(artifactDataHolder.getArtifact().getBytes()));
             jsonDataHolder.setAttribute(ARTIFACT_TYPE, Base64.getEncoder().encodeToString(artifactDataHolder.getArtifactType().getBytes()));
+            jsonDataHolder.setAttribute(ARTIFACT_NAME, Base64.getEncoder().encodeToString(artifactDataHolder.getArtifactName().getBytes()));
             jsonDataHolder.setAttribute(TEST_CASES_COUNT, artifactDataHolder.getTestCaseCount());
 
             //Add  test-case data from data holder to json object
