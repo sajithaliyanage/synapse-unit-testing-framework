@@ -66,9 +66,9 @@ public class MessageConstructor {
                 JSONConstructor jsonTestCaseDataHolder = new JSONConstructor();
                 jsonTestCaseDataHolder.initialize();
 
-                jsonTestCaseDataHolder.setAttribute(INPUT_XML_PAYLOAD, Base64.getEncoder().encodeToString(testCaseDataHolder.getInputXmlPayload(i).getBytes()));
-                jsonTestCaseDataHolder.setAttribute(EXPECTED_PROPERTY_VALUES, Base64.getEncoder().encodeToString(testCaseDataHolder.getExpectedPropertyValues(i).getBytes()));
-                jsonTestCaseDataHolder.setAttribute(EXPECTED_PAYLOAD, Base64.getEncoder().encodeToString(testCaseDataHolder.getExpectedPayload(i).getBytes()));
+                jsonTestCaseDataHolder.setAttribute(INPUT_XML_PAYLOAD, testCaseDataHolder.getInputXmlPayload(i));
+                jsonTestCaseDataHolder.setAttribute(EXPECTED_PROPERTY_VALUES, testCaseDataHolder.getExpectedPropertyValues(i));
+                jsonTestCaseDataHolder.setAttribute(EXPECTED_PAYLOAD, testCaseDataHolder.getExpectedPayload(i));
 
                 //Add test-case attributes to JSON array
                 jsonTestCaseDataHolderArray.setAttributeForArray(jsonTestCaseDataHolder.getJSONDataHolder());
