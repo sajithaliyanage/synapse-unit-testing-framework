@@ -51,7 +51,7 @@ public class UnitTestClient {
         JSONObject deployableJSON = deployableMessage.generateDeployMessage(readArtifactData, readTestCaseData);
 
         TCPClient tcpClient = new TCPClient(synapseHost, SynapsePort);
-        tcpClient.writeData(deployableJSON);
+        tcpClient.sendData(deployableJSON);
 
         logger.info("Unit testing client stopped");
     }

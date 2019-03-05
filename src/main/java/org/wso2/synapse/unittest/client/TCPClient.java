@@ -49,47 +49,28 @@ public class TCPClient {
 
     /**
      * Method of sending the artifact and test data to the synapse unit test agent
+     * Receive response from the server about unit test result
      * @param messageToBeSent deployable JSON object with artifact and test case data
      */
-    public void writeData(JSONObject messageToBeSent) {
-
-        try {
-            OutputStream outStream = clientSocket.getOutputStream();
-            ObjectOutputStream outputStream = new ObjectOutputStream(outStream);
-
-            outputStream.writeObject(messageToBeSent.toString());
-            outStream.flush();
+    public void sendData(JSONObject messageToBeSent){
+        try{
+            OutputStream outToServer = clientSocket.getOutputStream();
+            DataOutputStream out = new DataOutputStream(outToServer);
+            out.writeUTF(messageToBeSent.toString());
 
             logger.info("Artifact and Test case data sent to the Synapse unit test agent");
+            logger.info("Waiting for server response");
 
-        } catch (IOException e) {
-            logger.error("Exception in writing data to the socket", e);
-        }
+            InputStream inFromServer = clientSocket.getInputStream();
+            DataInputStream in = new DataInputStream(inFromServer);
 
-    }
+            logger.info("Response from server: " + in.readUTF());
 
-    /**
-     * Method of receiving the response from the synapse unit test agent
-     * @return response of synapse unit test agent as JSON
-     */
-    public JSONObject receiveJSON(){
-
-        JSONObject response = null;
-        try {
-            InputStream inStream = clientSocket.getInputStream();
-            ObjectInputStream inputStream = new ObjectInputStream(inStream);
-
-            response = (JSONObject) inputStream.readObject();
-
-        } catch (IOException e) {
-            logger.error("Exception in receiving data from the socket", e);
-        } catch (ClassNotFoundException e){
-            logger.error("Exception in receiving data from the socket", e);
         }catch (Exception e){
-            logger.error(e);
+            logger.error("Exception in writing data to the socket", e);
+        }finally {
+            closeConnection();
         }
-
-        return response;
     }
 
     /**
