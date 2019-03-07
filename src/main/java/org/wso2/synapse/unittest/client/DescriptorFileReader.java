@@ -26,11 +26,12 @@ import org.apache.logging.log4j.Logger;
 import org.wso2.synapse.unittest.client.data.holders.ArtifactData;
 import org.wso2.synapse.unittest.client.data.holders.TestCaseData;
 
-import javax.xml.namespace.QName;
-import javax.xml.stream.XMLStreamException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
 
 import static org.wso2.synapse.unittest.client.Constants.*;
 
@@ -48,11 +49,9 @@ public class DescriptorFileReader {
      * @param descriptorFilePath file path tom the descriptor file
      * @return dataHolder object with artifact data
      */
-    ArtifactData readArtifactData(String descriptorFilePath){
-
+    ArtifactData readArtifactData(String descriptorFilePath) {
         ArtifactData artifactDataHolder = new ArtifactData();
-
-        try{
+        try {
             String descriptorFileAsString = FileUtils.readFileToString(new File(descriptorFilePath));
             OMElement importXMLFile = AXIOMUtil.stringToOM(descriptorFileAsString);
 
@@ -80,13 +79,13 @@ public class DescriptorFileReader {
             String artifactName = (artifactNameNode.getText());
             artifactDataHolder.setArtifactName(artifactName);
 
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             logger.error("Descriptor file not found in given path");
-        }catch (XMLStreamException e){
+        } catch (XMLStreamException e) {
             logger.error(e);
-        }catch (IOException e){
+        } catch (IOException e) {
             logger.error(e);
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error(e);
         }
 
@@ -101,7 +100,7 @@ public class DescriptorFileReader {
      * @param descriptorFilePath file path tom the descriptor file
      * @return testCaseDataHolder object with test case data
      */
-    TestCaseData readTestCaseData(String descriptorFilePath){
+    TestCaseData readTestCaseData(String descriptorFilePath) {
 
         TestCaseData testCaseDataHolder = new TestCaseData();
 
@@ -119,9 +118,9 @@ public class DescriptorFileReader {
             OMElement testCasesNode = importXMLFile.getFirstChildWithName(qualifiedTestCases);
 
             //Iterate through test-cases in descriptor file
-            for(int i=0; i < testCasesCount; i++){
+            for (int i = 0; i < testCasesCount; i++) {
                 //Read test case from test-cases parent
-                QName qualifiedTestCase = new QName("", TEST_CASE+"-"+(i+1), "");
+                QName qualifiedTestCase = new QName("", TEST_CASE + "-" + (i + 1), "");
                 OMElement testCaseNode = testCasesNode.getFirstChildWithName(qualifiedTestCase);
 
                 //Read input-xml-payload child attribute from test-case node
@@ -132,15 +131,16 @@ public class DescriptorFileReader {
 
                 //Read expected-payload child attribute from test-case node
                 QName qualifiedExpectedPayload = new QName("", EXPECTED_PAYLOAD, "");
-                OMElement ExpectedPayloadNode = testCaseNode.getFirstChildWithName(qualifiedExpectedPayload);
-                String ExpectedPayload = ExpectedPayloadNode.getText();
-                testCaseDataHolder.addExpectedPayload(ExpectedPayload);
+                OMElement expectedPayloadNode = testCaseNode.getFirstChildWithName(qualifiedExpectedPayload);
+                String expectedPayload = expectedPayloadNode.getText();
+                testCaseDataHolder.addExpectedPayload(expectedPayload);
 
                 //Read expected-property-values child attribute from test-case node
                 QName qualifiedExpectedPropertyValues = new QName("", EXPECTED_PROPERTY_VALUES, "");
-                OMElement ExpectedPropertyValuesNode = testCaseNode.getFirstChildWithName(qualifiedExpectedPropertyValues);
-                String ExpectedPropertyValues = ExpectedPropertyValuesNode.getText();
-                testCaseDataHolder.addExpectedPropertyValues(ExpectedPropertyValues);
+                OMElement expectedPropertyValuesNode = testCaseNode
+                        .getFirstChildWithName(qualifiedExpectedPropertyValues);
+                String expectedPropertyValues = expectedPropertyValuesNode.getText();
+                testCaseDataHolder.addExpectedPropertyValues(expectedPropertyValues);
             }
 
         } catch (FileNotFoundException e) {

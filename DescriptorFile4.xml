@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<synapse-unit-test>
+    <artifact>
+        <proxy name="ArithmaticOper2" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+            <target>
+                <inSequence>
+                    <log description="Log Request Payload" level="full"/>
+                    <switch description="Route based on the Operation" source="//ArithmaticOperation/Operation">
+                        <case regex="Add">
+                            <payloadFactory description="Construct payload for addition operation" media-type="xml">
+                                <format>
+                                    <tem:AddInteger xmlns:tem="http://tempuri.org">
+                                        <tem:Arg1>$1</tem:Arg1>
+                                        <tem:Arg2>$2</tem:Arg2>
+                                    </tem:AddInteger>
+                                </format>
+                                <args>
+                                    <arg evaluator="xml" expression="//ArithmaticOperation/Arg1"/>
+                                    <arg evaluator="xml" expression="//ArithmaticOperation/Arg2"/>
+                                </args>
+                            </payloadFactory>
+                            <header description="Set SOAPAction header" name="Action" scope="default" value="http://tempuri.org/SOAP.Demo.AddInteger"/>
+                            <call description="Send request to the endpoint">
+                                <endpoint name="NumberAdditionEP" xmlns="http://ws.apache.org/ns/synapse">
+                                    <address format="soap11" uri="http://www.crcind.com/csp/samples/SOAP.Demo.cls"/>
+                                </endpoint>
+                            </call>
+                        </case>
+                        <case regex="Divide">
+                            <payloadFactory description="Construct payload for division operation" media-type="xml">
+                                <format>
+                                    <tem:DivideInteger xmlns:tem="http://tempuri.org">
+                                        <tem:Arg1>$1</tem:Arg1>
+                                        <tem:Arg2>$2</tem:Arg2>
+                                    </tem:DivideInteger>
+                                </format>
+                                <args>
+                                    <arg evaluator="xml" expression="//ArithmaticOperation/Arg1"/>
+                                    <arg evaluator="xml" expression="//ArithmaticOperation/Arg2"/>
+                                </args>
+                            </payloadFactory>
+                            <header description="Set SOAPAction header" name="Action" scope="default" value="http://tempuri.org/SOAP.Demo.DivideInteger"/>
+                            <call>
+                                <endpoint name="NumberDivisionEP" xmlns="http://ws.apache.org/ns/synapse">
+                                    <address format="soap11" uri="http://www.crcind.com/csp/samples/SOAP.Demo.cls"/>
+                                </endpoint>
+
+                            </call>
+                        </case>
+                        <default>
+                            <payloadFactory description="Create response payload for unsupported operation" media-type="xml">
+                                <format>
+                                    <Message xmlns="">Unsupported operation.</Message>
+                                </format>
+                                <args/>
+                            </payloadFactory>
+                        </default>
+                    </switch>
+                    <log description="Log Request Payload" level="full"/>
+                    <respond description="Send result to the client"/>
+                </inSequence>
+                <outSequence/>
+                <faultSequence/>
+            </target>
+        </proxy>
+    </artifact>
+
+    <artifact-name>ArithmaticOper2</artifact-name>
+    <artifact-type>proxy</artifact-type>
+
+    <test-cases-count>2</test-cases-count>
+    <test-cases>
+        <test-case-1>
+            <input-xml-payload>
+                <![CDATA[
+                        <ArithmaticOperation>
+                          <Operation>Add</Operation>
+                          <Arg1>10</Arg1>
+                          <Arg2>25</Arg2>
+                        </ArithmaticOperation>
+                ]]>
+            </input-xml-payload>
+
+            <expected-property-values>
+                <![CDATA[<?xml version='1.0' encoding='UTF-8' ?>]]>
+            </expected-property-values>
+
+            <expected-payload>
+                <![CDATA[<?xml version='1.0' encoding='UTF-8'?>
+                <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <SOAP-ENV:Body>
+                        <AddIntegerResponse xmlns="http://tempuri.org">
+                            <AddIntegerResult>35</AddIntegerResult>
+                        </AddIntegerResponse>
+                    </SOAP-ENV:Body>
+                </SOAP-ENV:Envelope>]]>
+            </expected-payload>
+
+        </test-case-1>
+        <test-case-2>
+            <input-xml-payload>
+                <![CDATA[
+                        <ArithmaticOperation>
+                          <Operation>Divide</Operation>
+                          <Arg1>25</Arg1>
+                          <Arg2>5</Arg2>
+                        </ArithmaticOperation>
+                ]]>
+            </input-xml-payload>
+
+            <expected-property-values>
+                <![CDATA[<?xml version='1.0' encoding='UTF-8' ?>]]>
+            </expected-property-values>
+
+            <expected-payload>
+                <![CDATA[<?xml version='1.0' encoding='UTF-8'?>
+                <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <SOAP-ENV:Body>
+                        <DivideIntegerResponse xmlns="http://tempuri.org">
+                            <DivideIntegerResult>5</DivideIntegerResult>
+                        </DivideIntegerResponse>
+                    </SOAP-ENV:Body>
+                </SOAP-ENV:Envelope>]]>
+            </expected-payload>
+
+        </test-case-2>
+    </test-cases>
+
+    <mock-services-count>1</mock-services-count>
+    <mock-services>
+        <mock-service-1>
+            <service-name>Hospital</service-name>
+            <mock-service-url>http://localhost:9090/query/doctor</mock-service-url>
+            <mock-service-type>POST</mock-service-type>
+            <mock-service-json-payload>
+                {
+                    "name":"John Smith",
+                    "age":23,
+                    "hospital":"Central Hospital"
+                }
+            </mock-service-json-payload>
+            <mock-service-expected-json-response>
+                {
+                    "hospital":"Central Hospital"
+                }
+            </mock-service-expected-json-response>
+        </mock-service-1>
+    </mock-services>
+</synapse-unit-test>

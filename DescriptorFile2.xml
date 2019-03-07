@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<synapse-unit-test>
+    <artifact>
+        <api xmlns="http://ws.apache.org/ns/synapse" name="apiTest3" context="/orderdelayAPI3">
+            <resource methods="POST" url-mapping="/">
+                <inSequence>
+                    <log level="full" />
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9091/hello/sayHello" />
+                        </endpoint>
+                    </send>
+                    <log level="full" />
+                </inSequence>
+            </resource>
+        </api>
+    </artifact>
+
+    <artifact-name>apiTest3</artifact-name>
+    <artifact-type>api</artifact-type>
+
+    <test-cases-count>1</test-cases-count>
+    <test-cases>
+        <test-case-1>
+            <input-xml-payload>
+                <![CDATA[
+                        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
+                           <soapenv:Header />
+                           <soapenv:Body>
+                           </soapenv:Body>
+                        </soapenv:Envelope>
+                ]]>
+            </input-xml-payload>
+
+            <expected-property-values>
+                <![CDATA[<?xml version='1.0' encoding='UTF-8' ?>]]><empty/>
+            </expected-property-values>
+
+            <expected-payload>
+                {"fname":"Peter", "lname":"Stallone", "age":22, "address":{"line":"20 Palm Grove", "city":"Colombo 03", "country":"Sri Lanka"}}
+            </expected-payload>
+
+        </test-case-1>
+        <!--<test-case-2>-->
+            <!--<input-xml-payload>Hi-->
+            <!--</input-xml-payload>-->
+
+            <!--<expected-property-values>test-->
+            <!--</expected-property-values>-->
+
+            <!--<expected-payload>-->
+                <!--test2-->
+            <!--</expected-payload>-->
+
+        <!--</test-case-2>-->
+    </test-cases>
+
+    <mock-services-count>1</mock-services-count>
+    <mock-services>
+        <mock-service-1>
+            <service-name>Hospital</service-name>
+            <mock-service-url>http://localhost:9090/query/doctor</mock-service-url>
+            <mock-service-type>POST</mock-service-type>
+            <mock-service-json-payload>
+                {
+                    "name":"John Smith",
+                    "age":23,
+                    "hospital":"Central Hospital"
+                }
+            </mock-service-json-payload>
+            <mock-service-expected-json-response>
+                {
+                    "hospital":"Central Hospital"
+                }
+            </mock-service-expected-json-response>
+        </mock-service-1>
+    </mock-services>
+</synapse-unit-test>

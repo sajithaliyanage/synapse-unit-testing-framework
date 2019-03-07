@@ -45,11 +45,11 @@ public class MessageConstructor {
      * @param artifactDataHolder object of ArtifactData which contains artifact data read from descriptor file
      * @return JSONObject which is ready to deploy via TCP server
      */
-    public JSONObject generateDeployMessage(ArtifactData artifactDataHolder, TestCaseData testCaseDataHolder){
+    public JSONObject generateDeployMessage(ArtifactData artifactDataHolder, TestCaseData testCaseDataHolder) {
 
         JSONConstructor jsonDataHolder = new JSONConstructor();
 
-        try{
+        try {
             jsonDataHolder.initialize();
 
             //Add artifact data from data holder to json object
@@ -62,13 +62,16 @@ public class MessageConstructor {
             JSONConstructor jsonTestCaseDataHolderArray = new JSONConstructor();
             jsonTestCaseDataHolderArray.initializeArray();
 
-            for(int i=0; i < artifactDataHolder.getTestCaseCount(); i++){
+            for (int i = 0; i < artifactDataHolder.getTestCaseCount(); i++) {
                 JSONConstructor jsonTestCaseDataHolder = new JSONConstructor();
                 jsonTestCaseDataHolder.initialize();
 
-                jsonTestCaseDataHolder.setAttribute(INPUT_XML_PAYLOAD, testCaseDataHolder.getInputXmlPayload(i));
-                jsonTestCaseDataHolder.setAttribute(EXPECTED_PROPERTY_VALUES, testCaseDataHolder.getExpectedPropertyValues(i));
-                jsonTestCaseDataHolder.setAttribute(EXPECTED_PAYLOAD, testCaseDataHolder.getExpectedPayload(i));
+                jsonTestCaseDataHolder.setAttribute(INPUT_XML_PAYLOAD, Base64.getEncoder()
+                        .encodeToString(testCaseDataHolder.getInputXmlPayload(i).getBytes()));
+                jsonTestCaseDataHolder.setAttribute(EXPECTED_PROPERTY_VALUES, Base64.getEncoder()
+                        .encodeToString(testCaseDataHolder.getExpectedPropertyValues(i).getBytes()));
+                jsonTestCaseDataHolder.setAttribute(EXPECTED_PAYLOAD, Base64.getEncoder()
+                        .encodeToString(testCaseDataHolder.getExpectedPayload(i).getBytes()));
 
                 //Add test-case attributes to JSON array
                 jsonTestCaseDataHolderArray.setAttributeForArray(jsonTestCaseDataHolder.getJSONDataHolder());
@@ -78,7 +81,7 @@ public class MessageConstructor {
 
             logger.info("Deployable JSON artifact data object created");
 
-        }catch(Exception e){
+        } catch (Exception e) {
             logger.error(e);
         }
 

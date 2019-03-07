@@ -1,40 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <synapse-unit-test>
-    <!--<artifact>-->
-        <!--<sequence xmlns="http://ws.apache.org/ns/synapse"  trace="disable" name="seqTest">-->
-            <!--<log description="Request Log" level="custom">-->
-                <!--<property name="message" value="Good Morning"/>-->
-            <!--</log>-->
-
-            <!--<call blocking="true">-->
-                <!--<endpoint name="QueryDoctorEP" xmlns="http://ws.apache.org/ns/synapse">-->
-                    <!--<http method="get" uri-template="http://localhost:9091/hello/sayHello"/>-->
-                <!--</endpoint>-->
-            <!--</call>-->
-        <!--</sequence>-->
-    <!--</artifact>-->
     <artifact>
-        <proxy xmlns="http://ws.apache.org/ns/synapse" name="proxyTest" startOnLoad="true" statistics="disable" trace="disable" transports="http,https">
-            <target>
-                <inSequence>
-                    <send>
-                        <endpoint name="QueryDoctorEP" xmlns="http://ws.apache.org/ns/synapse">
-                            <http method="get" uri-template="http://localhost:9091/hello/sayHello"/>
-                        </endpoint>
-                    </send>
-                    <respond />
-                </inSequence>
-            </target>
-            <description />
-        </proxy>
+        <sequence xmlns="http://ws.apache.org/ns/synapse" name="sequenceTest">
+            <log level="full" />
+            <enrich>
+                <source clone="true" type="inline">
+                    <xsd:symbol xmlns:xsd="http://services.samples/xsd">SUN</xsd:symbol>
+                </source>
+                <target xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd" action="child" type="custom" xpath="//ser:getQuote/ser:request" />
+            </enrich>
+            <log level="full" />
+        </sequence>
     </artifact>
 
-    <!--<artifact-name>seqTest</artifact-name>-->
-    <!--<artifact-type>sequence</artifact-type>-->
+    <artifact-name>sequenceTest</artifact-name>
+    <artifact-type>sequence</artifact-type>
 
-    <artifact-name>proxyTest</artifact-name>
-    <artifact-type>proxy</artifact-type>
 
     <test-cases-count>1</test-cases-count>
     <test-cases>
@@ -57,11 +39,43 @@
             </input-xml-payload>
 
             <expected-property-values>
-                <![CDATA[<?xml version='1.0' encoding='UTF-8' ?>]]><empty/>
+                <![CDATA[<?xml version='1.0' encoding='utf-8'?>
+                    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                      <soapenv:Body>
+                        <soapenv:Envelope xmlns:xsd="http://services.samples/xsd" xmlns:ser="http://services.samples">
+                            <soapenv:Header/>
+                            <soapenv:Body>
+                                <ser:getQuote>
+                                    <!--Optional:-->
+                                    <ser:request>
+                                        <!--Optional:-->
+                                        <xsd:symbol>WSO2</xsd:symbol>
+                                        <xsd:symbol>SUN</xsd:symbol>
+                                    </ser:request>
+                                </ser:getQuote>
+                            </soapenv:Body>
+                        </soapenv:Envelope>
+                      </soapenv:Body>
+                    </soapenv:Envelope>
+                ]]>
             </expected-property-values>
 
             <expected-payload>
-                {"fname":"Peter", "lname":"Stallone", "age":22, "address":{"line":"20 Palm Grove", "city":"Colombo 03", "country":"Sri Lanka"}}
+                <![CDATA[
+                    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://services.samples/xsd" xmlns:ser="http://services.samples">
+                       <soapenv:Header/>
+                       <soapenv:Body>
+                          <ser:getQuote>
+                             <!--Optional:-->
+                             <ser:request>
+                                <!--Optional:-->
+                                <xsd:symbol>WSO2</xsd:symbol>
+                                <xsd:symbol>SUN</xsd:symbol>
+                             </ser:request>
+                          </ser:getQuote>
+                       </soapenv:Body>
+                    </soapenv:Envelope>
+                ]]>
             </expected-payload>
 
         </test-case-1>
@@ -81,7 +95,7 @@
 
     <mock-services-count>1</mock-services-count>
     <mock-services>
-        <mock-service>
+        <mock-service-1>
             <service-name>Hospital</service-name>
             <mock-service-url>http://localhost:9090/query/doctor</mock-service-url>
             <mock-service-type>POST</mock-service-type>
@@ -97,26 +111,6 @@
                     "hospital":"Central Hospital"
                 }
             </mock-service-expected-json-response>
-        </mock-service>
+        </mock-service-1>
     </mock-services>
 </synapse-unit-test>
-
-        <!--<sequence xmlns="http://ws.apache.org/ns/synapse" name="conf:/StoreSend">-->
-        <!--<axis2ns4:store xmlns:axis2ns4="http://ws.apache.org/ns/synapse" messageStore="JMSMS" sequence="conf:/repository/components/org.wso2.carbon.throttle/templates"></axis2ns4:store>-->
-        <!--<send>-->
-        <!--<endpoint>-->
-        <!--<address uri="http://localhost:9000/services/SimpleStockQuoteService"></address>-->
-        <!--</endpoint>-->
-        <!--</send>-->
-        <!--</sequence>-->
-
-        <!--<proxy xmlns="http://ws.apache.org/ns/synapse" name="TestProxy">-->
-        <!--<target>-->
-        <!--<endpoint>-->
-        <!--<address uri="http://localhost:9000/services/SimpleStockQuoteService\"/>-->
-        <!--</endpoint>-->
-        <!--<outSequence>-->
-        <!--<send/>-->
-        <!--</outSequence>-->
-        <!--</target>-->
-        <!--</proxy>-->
