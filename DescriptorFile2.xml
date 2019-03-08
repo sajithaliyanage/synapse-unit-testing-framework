@@ -52,7 +52,7 @@
         </test-case-1>
     </test-cases>
 
-    <mock-services-count>3</mock-services-count>
+    <mock-services-count>1</mock-services-count>
     <mock-services>
         <mock-service-1>
             <service-name>Hospital</service-name>

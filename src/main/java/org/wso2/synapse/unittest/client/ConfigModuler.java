@@ -23,6 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.*;
 import org.wso2.synapse.unittest.client.data.holders.MockServiceData;
+import org.wso2.synapse.unittest.client.mock.services.MockServiceCreator;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -87,6 +88,9 @@ public class ConfigModuler {
                                 break;
                             }
                         }
+
+                        logger.info("Mock service creator ready to start service for " + valueOfName);
+                        MockServiceCreator.startServer();
                     }
                 }
             }
@@ -98,7 +102,6 @@ public class ConfigModuler {
             Transformer transformer = tf.newTransformer();
             transformer.transform(domSource, result);
 
-            System.out.println(writer.toString());
             return  writer.toString();
 
         } catch (Exception e) {
