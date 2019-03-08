@@ -56,7 +56,9 @@
     <mock-services>
         <mock-service-1>
             <service-name>Hospital</service-name>
-            <mock-service-url>http://localhost:9090/donedone/doctor</mock-service-url>
+            <mock-service-host>127.0.0.1</mock-service-host>
+            <mock-service-port>9090</mock-service-port>
+            <mock-service-path>/users/user/info</mock-service-path>
             <mock-service-type>POST</mock-service-type>
             <mock-service-payload>
                 {
@@ -71,39 +73,5 @@
                 }
             </mock-service-expected-response>
         </mock-service-1>
-        <mock-service-2>
-            <service-name>Hospital3</service-name>
-            <mock-service-url>http://localhost:9090/sajitha/liyanage</mock-service-url>
-            <mock-service-type>NOTHING</mock-service-type>
-            <mock-service-payload>
-                {
-                "name":"John Smith",
-                "age":23,
-                "hospital":"Central Hospital"
-                }
-            </mock-service-payload>
-            <mock-service-expected-response>
-                {
-                "hospital":"Central Hospital"
-                }
-            </mock-service-expected-response>
-        </mock-service-2>
-        <mock-service-3>
-            <service-name>Hospital23</service-name>
-            <mock-service-url>http://localhost:90/gimsha/done</mock-service-url>
-            <mock-service-type>POST</mock-service-type>
-            <mock-service-payload>
-                {
-                "name":"John Smith",
-                "age":23,
-                "hospital":"Central Hospital"
-                }
-            </mock-service-payload>
-            <mock-service-expected-response>
-                {
-                "hospital":"Central Hospital"
-                }
-            </mock-service-expected-response>
-        </mock-service-3>
     </mock-services>
 </synapse-unit-test>

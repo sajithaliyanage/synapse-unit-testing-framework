@@ -69,6 +69,12 @@ public class ConfigModuler {
                         int serviceElementIndex = mockServiceData.getServiceNameIndex(valueOfName);
                         String serviceHostUrl = mockServiceData.getServiceHost(serviceElementIndex);
                         String serviceMethod = mockServiceData.getServiceType(serviceElementIndex);
+                        String host = mockServiceData.getServiceHost(serviceElementIndex);
+                        int port = mockServiceData.getServicePort(serviceElementIndex);
+                        String path = mockServiceData.getServicePath(serviceElementIndex);
+                        String method = mockServiceData.getServiceType(serviceElementIndex);
+                        String inputPayload = mockServiceData.getServicePayload(serviceElementIndex);
+                        String response = mockServiceData.getServiceResponse(serviceElementIndex);
 
                         NodeList childNodesOfEndPoint = endPointNode.getChildNodes();
                         Node addressNode = childNodesOfEndPoint.item(1);
@@ -90,7 +96,7 @@ public class ConfigModuler {
                         }
 
                         logger.info("Mock service creator ready to start service for " + valueOfName);
-                        MockServiceCreator.startServer();
+                        MockServiceCreator.startServer(valueOfName, host , port, path , method , inputPayload , response);
                     }
                 }
             }

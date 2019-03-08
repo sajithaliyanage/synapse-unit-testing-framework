@@ -182,6 +182,18 @@ public class DescriptorFileReader {
             String serviceHost = serviceHostNode.getText();
             mockServiceDataHolder.addServiceHost(serviceHost);
 
+            //Read service port child attribute from mock service node
+            QName qualifiedServicePort = new QName("", SERVICE_PORT, "");
+            OMElement servicePortNode = mockServiceNode.getFirstChildWithName(qualifiedServicePort);
+            int servicePort = Integer.parseInt(servicePortNode.getText());
+            mockServiceDataHolder.addServicePort(servicePort);
+
+            //Read service path child attribute from mock service node
+            QName qualifiedServicePath = new QName("", SERVICE_PATH, "");
+            OMElement servicePathNode = mockServiceNode.getFirstChildWithName(qualifiedServicePath);
+            String servicePath = servicePathNode.getText();
+            mockServiceDataHolder.addServicePath(servicePath);
+
             //Read service type child attribute from mock service node
             QName qualifiedServiceType = new QName("", SERVICE_TYPE, "");
             OMElement serviceTypeNode = mockServiceNode.getFirstChildWithName(qualifiedServiceType);

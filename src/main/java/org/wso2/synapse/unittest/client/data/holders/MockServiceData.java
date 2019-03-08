@@ -31,6 +31,8 @@ public class MockServiceData {
     private int mockServicesCount = 0;
     private Map<String, Integer> serviceNameMap = new HashMap<String, Integer>();
     private ArrayList<String> serviceHost = new ArrayList<String>();
+    private ArrayList<Integer> servicePort = new ArrayList<Integer>();
+    private ArrayList<String> servicePath = new ArrayList<String>();
     private ArrayList<String> serviceType = new ArrayList<String>();
     private ArrayList<String> servicePayload = new ArrayList<String>();
     private ArrayList<String> serviceResponse = new ArrayList<String>();
@@ -45,6 +47,14 @@ public class MockServiceData {
 
     public String getServiceHost(int elementIndex) {
         return serviceHost.get(elementIndex);
+    }
+
+    public int getServicePort(int elementIndex) {
+        return servicePort.get(elementIndex);
+    }
+
+    public String getServicePath(int elementIndex) {
+        return servicePath.get(elementIndex);
     }
 
     public String getServiceType(int elementIndex) {
@@ -65,6 +75,14 @@ public class MockServiceData {
 
     public void addServiceHost(String serviceHost) {
         this.serviceHost.add(serviceHost);
+    }
+
+    public void addServicePort(int servicePort) {
+        this.servicePort.add(servicePort);
+    }
+
+    public void addServicePath(String servicePath) {
+        this.servicePath.add(servicePath);
     }
 
     public void addServiceType(String serviceType) {
