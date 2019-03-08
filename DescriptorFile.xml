@@ -99,18 +99,18 @@
             <service-name>Hospital</service-name>
             <mock-service-url>http://localhost:9090/query/doctor</mock-service-url>
             <mock-service-type>POST</mock-service-type>
-            <mock-service-json-payload>
+            <mock-service-payload>
                 {
                     "name":"John Smith",
                     "age":23,
                     "hospital":"Central Hospital"
                 }
-            </mock-service-json-payload>
-            <mock-service-expected-json-response>
+            </mock-service-payload>
+            <mock-service-expected-response>
                 {
                     "hospital":"Central Hospital"
                 }
-            </mock-service-expected-json-response>
+            </mock-service-expected-response>
         </mock-service-1>
     </mock-services>
 </synapse-unit-test>

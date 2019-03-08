@@ -2,22 +2,30 @@
 
 <synapse-unit-test>
     <artifact>
-        <api xmlns="http://ws.apache.org/ns/synapse" name="apiTest3" context="/orderdelayAPI3">
-            <resource methods="POST" url-mapping="/">
+        <api xmlns="http://ws.apache.org/ns/synapse" name="apiTest42" context="/orderdelays">
+            <resource methods="GET" url-mapping="/">
                 <inSequence>
                     <log level="full" />
                     <send>
-                        <endpoint>
+                        <endpoint name="Hospital">
                             <address uri="http://localhost:9091/hello/sayHello" />
                         </endpoint>
                     </send>
                     <log level="full" />
+                    <send>
+                        <endpoint name="Hospital23">
+                            <address uri="http://localhost:9091/hello/sayHello" />
+                        </endpoint>
+                    </send>
+                    <endpoint name="Hospital3" xmlns="http://ws.apache.org/ns/synapse">
+                        <http method="get" uri-template="http://localhost:9091/hello/sayHello"/>
+                    </endpoint>
                 </inSequence>
             </resource>
         </api>
     </artifact>
 
-    <artifact-name>apiTest3</artifact-name>
+    <artifact-name>apiTest42</artifact-name>
     <artifact-type>api</artifact-type>
 
     <test-cases-count>1</test-cases-count>
@@ -42,38 +50,60 @@
             </expected-payload>
 
         </test-case-1>
-        <!--<test-case-2>-->
-            <!--<input-xml-payload>Hi-->
-            <!--</input-xml-payload>-->
-
-            <!--<expected-property-values>test-->
-            <!--</expected-property-values>-->
-
-            <!--<expected-payload>-->
-                <!--test2-->
-            <!--</expected-payload>-->
-
-        <!--</test-case-2>-->
     </test-cases>
 
-    <mock-services-count>1</mock-services-count>
+    <mock-services-count>3</mock-services-count>
     <mock-services>
         <mock-service-1>
             <service-name>Hospital</service-name>
-            <mock-service-url>http://localhost:9090/query/doctor</mock-service-url>
+            <mock-service-url>http://localhost:9090/donedone/doctor</mock-service-url>
             <mock-service-type>POST</mock-service-type>
-            <mock-service-json-payload>
+            <mock-service-payload>
                 {
                     "name":"John Smith",
                     "age":23,
                     "hospital":"Central Hospital"
                 }
-            </mock-service-json-payload>
-            <mock-service-expected-json-response>
+            </mock-service-payload>
+            <mock-service-expected-response>
                 {
                     "hospital":"Central Hospital"
                 }
-            </mock-service-expected-json-response>
+            </mock-service-expected-response>
         </mock-service-1>
+        <mock-service-2>
+            <service-name>Hospital3</service-name>
+            <mock-service-url>http://localhost:9090/sajitha/liyanage</mock-service-url>
+            <mock-service-type>NOTHING</mock-service-type>
+            <mock-service-payload>
+                {
+                "name":"John Smith",
+                "age":23,
+                "hospital":"Central Hospital"
+                }
+            </mock-service-payload>
+            <mock-service-expected-response>
+                {
+                "hospital":"Central Hospital"
+                }
+            </mock-service-expected-response>
+        </mock-service-2>
+        <mock-service-3>
+            <service-name>Hospital23</service-name>
+            <mock-service-url>http://localhost:90/gimsha/done</mock-service-url>
+            <mock-service-type>POST</mock-service-type>
+            <mock-service-payload>
+                {
+                "name":"John Smith",
+                "age":23,
+                "hospital":"Central Hospital"
+                }
+            </mock-service-payload>
+            <mock-service-expected-response>
+                {
+                "hospital":"Central Hospital"
+                }
+            </mock-service-expected-response>
+        </mock-service-3>
     </mock-services>
 </synapse-unit-test>

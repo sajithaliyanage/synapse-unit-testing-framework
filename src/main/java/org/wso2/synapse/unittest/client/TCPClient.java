@@ -52,8 +52,8 @@ public class TCPClient {
      * Receive response from the server about unit test result
      * @param messageToBeSent deployable JSON object with artifact and test case data
      */
-    public void sendData(JSONObject messageToBeSent){
-        try{
+    public void sendData(JSONObject messageToBeSent) {
+        try {
             OutputStream outToServer = clientSocket.getOutputStream();
             DataOutputStream out = new DataOutputStream(outToServer);
             out.writeUTF(messageToBeSent.toString());
@@ -66,9 +66,9 @@ public class TCPClient {
 
             logger.info("Response from server: " + in.readUTF());
 
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Exception in writing data to the socket", e);
-        }finally {
+        } finally {
             closeConnection();
         }
     }
@@ -76,7 +76,7 @@ public class TCPClient {
     /**
      * Method of closing connection of TCP
      */
-    public void closeConnection(){
+    public void closeConnection() {
         try {
             clientSocket.close();
         } catch (IOException e) {

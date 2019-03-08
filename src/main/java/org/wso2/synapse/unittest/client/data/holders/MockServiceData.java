@@ -18,51 +18,78 @@
 
 package org.wso2.synapse.unittest.client.data.holders;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+
+/**
+ * Mock service data holder class in unit test framework
+ */
 public class MockServiceData {
 
-    private String serviceName;
-    private String serviceHost;
-    private String serviceType;
-    private String servicePayload;
-    private String serviceResponse;
+    private int mockServicesCount = 0;
+    private Map<String, Integer> serviceNameMap = new HashMap<String, Integer>();
+    private ArrayList<String> serviceHost = new ArrayList<String>();
+    private ArrayList<String> serviceType = new ArrayList<String>();
+    private ArrayList<String> servicePayload = new ArrayList<String>();
+    private ArrayList<String> serviceResponse = new ArrayList<String>();
 
-    public String getServiceName() {
-        return serviceName;
+    public int getMockServicesCount() {
+        return this.mockServicesCount;
     }
 
-    public String getServiceHost() {
-        return serviceHost;
+    public int getServiceNameIndex(String serviceName) {
+        return serviceNameMap.get(serviceName);
     }
 
-    public String getServiceType() {
-        return serviceType;
+    public String getServiceHost(int elementIndex) {
+        return serviceHost.get(elementIndex);
     }
 
-    public String getServicePayload() {
-        return servicePayload;
+    public String getServiceType(int elementIndex) {
+        return serviceType.get(elementIndex);
     }
 
-    public String getServiceResponse() {
-        return serviceResponse;
+    public String getServicePayload(int elementIndex) {
+        return servicePayload.get(elementIndex);
     }
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+    public String getServiceResponse(int elementIndex) {
+        return serviceResponse.get(elementIndex);
     }
 
-    public void setServiceHost(String serviceHost) {
-        this.serviceHost = serviceHost;
+    public void addServiceName(String serviceName, int indexValue) {
+        serviceNameMap.put(serviceName, indexValue);
     }
 
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
+    public void addServiceHost(String serviceHost) {
+        this.serviceHost.add(serviceHost);
     }
 
-    public void setServicePayload(String servicePayload) {
-        this.servicePayload = servicePayload;
+    public void addServiceType(String serviceType) {
+        this.serviceType.add(serviceType);
     }
 
-    public void setServiceResponse(String serviceResponse) {
-        this.serviceResponse = serviceResponse;
+    public void addServicePayload(String servicePayload) {
+        this.servicePayload.add(servicePayload);
+    }
+
+    public void addServiceResponse(String serviceResponse) {
+        this.serviceResponse.add(serviceResponse);
+    }
+
+    public void setMockServicesCount(int mockServiceCount) {
+        this.mockServicesCount = mockServiceCount;
+    }
+
+    public boolean isServiceNameExist(String serviceName) {
+        boolean isExist = false;
+
+        if (serviceNameMap.containsKey(serviceName)) {
+            isExist = true;
+        }
+
+        return isExist;
     }
 }

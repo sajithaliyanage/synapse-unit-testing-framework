@@ -22,6 +22,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.wso2.synapse.unittest.client.data.holders.ArtifactData;
+import org.wso2.synapse.unittest.client.data.holders.MockServiceData;
 import org.wso2.synapse.unittest.client.data.holders.TestCaseData;
 
 import java.util.Base64;
@@ -45,15 +46,24 @@ public class MessageConstructor {
      * @param artifactDataHolder object of ArtifactData which contains artifact data read from descriptor file
      * @return JSONObject which is ready to deploy via TCP server
      */
-    public JSONObject generateDeployMessage(ArtifactData artifactDataHolder, TestCaseData testCaseDataHolder) {
+    public JSONObject generateDeployMessage(ArtifactData artifactDataHolder, TestCaseData testCaseDataHolder, MockServiceData mockServiceData) {
 
         JSONConstructor jsonDataHolder = new JSONConstructor();
+        String configuredArtifact;
+
+        //configure the artifact if there are mock-services to append
+        if (mockServiceData.getMockServicesCount() > 0) {
+            configuredArtifact = ConfigModuler.endPointModifier(artifactDataHolder.getArtifact(), mockServiceData);
+
+        } else {
+            configuredArtifact = artifactDataHolder.getArtifact();
+        }
 
         try {
             jsonDataHolder.initialize();
 
             //Add artifact data from data holder to json object
-            jsonDataHolder.setAttribute(ARTIFACT, Base64.getEncoder().encodeToString(artifactDataHolder.getArtifact().getBytes()));
+            jsonDataHolder.setAttribute(ARTIFACT, Base64.getEncoder().encodeToString(configuredArtifact.getBytes()));
             jsonDataHolder.setAttribute(ARTIFACT_TYPE, Base64.getEncoder().encodeToString(artifactDataHolder.getArtifactType().getBytes()));
             jsonDataHolder.setAttribute(ARTIFACT_NAME, Base64.getEncoder().encodeToString(artifactDataHolder.getArtifactName().getBytes()));
             jsonDataHolder.setAttribute(TEST_CASES_COUNT, artifactDataHolder.getTestCaseCount());
@@ -84,6 +94,8 @@ public class MessageConstructor {
         } catch (Exception e) {
             logger.error(e);
         }
+
+
 
         return jsonDataHolder.getJSONDataHolder();
     }

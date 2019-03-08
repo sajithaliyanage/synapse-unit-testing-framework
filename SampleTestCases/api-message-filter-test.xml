@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<synapse-unit-test>
+    <artifact>
+        <api context="/phoneValidators/7575449510" name="FilterExampleOfFilters" xmlns="http://ws.apache.org/ns/synapse">
+            <resource methods="GET" uri-template="/">
+                <inSequence>
+                    <property description="Read the phone number in the resource URL" expression="get-property('uri.var.phoneNumber')" name="phoneNumber" scope="default" type="STRING"/>
+                    <log description="Log the phone number" level="custom">
+                        <property expression="$ctx:phoneNumber" name="PhoneNumber"/>
+                    </log>
+                    <filter description="Check phone number has 10 digits" xpath="fn:string-length(7575449510) = 10">
+                        <then>
+                            <call description="Send request to endpoint">
+                                <endpoint name="PhoneVerifyEP" xmlns="http://ws.apache.org/ns/synapse">
+                                    <http uri-template="http://ws.cdyne.com/phoneverify/phoneverify.asmx/CheckPhoneNumber?PhoneNumber=7575449510&amp;LicenseKey=0"/>
+                                </endpoint>
+                            </call>
+                        </then>
+                        <else>
+                            <payloadFactory description="Create response payload for invalid phone numbers" media-type="xml">
+                                <format>
+                                    <Message xmlns="">Invalid Phone Number</Message>
+                                </format>
+                                <args/>
+                            </payloadFactory>
+                        </else>
+                    </filter>
+                    <respond description="Send response back to the client"/>
+                </inSequence>
+                <outSequence/>
+                <faultSequence/>
+            </resource>
+        </api>
+    </artifact>
+
+    <artifact-name>FilterExampleOfFilters</artifact-name>
+    <artifact-type>api</artifact-type>
+
+    <test-cases-count>1</test-cases-count>
+    <test-cases>
+        <test-case-1>
+            <input-xml-payload>
+                <![CDATA[]]>
+            </input-xml-payload>
+
+            <expected-property-values>
+                <![CDATA[<?xml version='1.0' encoding='UTF-8' ?>]]>
+            </expected-property-values>
+
+            <expected-payload>
+                <![CDATA[<?xml version="1.0" encoding="utf-8"?>
+                    <PhoneReturn xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ws.cdyne.com/PhoneVerify/query">
+                    <Company>LEVEL 3 COMMUNICATIONS. LLC - </Company>
+                    <Valid>true</Valid><Use>Assigned to a code holder for normal use.</Use>
+                    <State>VA</State>
+                    <RC>PARKSLEY</RC><OCN>8825</OCN>
+                    <OriginalNumber>7575449510</OriginalNumber>
+                    <CleanNumber>7575449510</CleanNumber>
+                    <SwitchName>NORFOLK</SwitchName><SwitchType />
+                    <Country>United States</Country><CLLI>CHSKVAAYDS0</CLLI>
+                    <PrefixType>CLEC - (Competitive Local Exchange Carrier)</PrefixType><LATA>252</LATA>
+                    <sms>CLEC - (Competitive Local Exchange Carrier)</sms><Email />
+                    <AssignDate>23/10/2005</AssignDate><TelecomCity>Chesapeake</TelecomCity><TelecomCounty />
+                    <TelecomState>VA</TelecomState><TelecomZip>23324</TelecomZip><TimeZone>EST</TimeZone><Lat /><Long />
+                    <Wireless>false</Wireless><LRN>7576559199</LRN></PhoneReturn>
+                ]]>
+            </expected-payload>
+
+        </test-case-1>
+        <!--<test-case-2>-->
+            <!--<input-xml-payload>Hi-->
+            <!--</input-xml-payload>-->
+
+            <!--<expected-property-values>test-->
+            <!--</expected-property-values>-->
+
+            <!--<expected-payload>-->
+                <!--test2-->
+            <!--</expected-payload>-->
+
+        <!--</test-case-2>-->
+    </test-cases>
+
+    <mock-services-count>1</mock-services-count>
+    <mock-services>
+        <mock-service-1>
+            <service-name>Hospital</service-name>
+            <mock-service-url>http://localhost:9090/query/doctor</mock-service-url>
+            <mock-service-type>POST</mock-service-type>
+            <mock-service-json-payload>
+                {
+                    "name":"John Smith",
+                    "age":23,
+                    "hospital":"Central Hospital"
+                }
+            </mock-service-json-payload>
+            <mock-service-expected-json-response>
+                {
+                    "hospital":"Central Hospital"
+                }
+            </mock-service-expected-json-response>
+        </mock-service-1>
+    </mock-services>
+</synapse-unit-test>

@@ -2,7 +2,7 @@
 
 <synapse-unit-test>
     <artifact>
-        <proxy name="ArithmaticOper2" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+        <proxy name="ArithmaticOper22" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
             <target>
                 <inSequence>
                     <log description="Log Request Payload" level="full"/>
@@ -66,7 +66,7 @@
         </proxy>
     </artifact>
 
-    <artifact-name>ArithmaticOper2</artifact-name>
+    <artifact-name>ArithmaticOper22</artifact-name>
     <artifact-type>proxy</artifact-type>
 
     <test-cases-count>2</test-cases-count>

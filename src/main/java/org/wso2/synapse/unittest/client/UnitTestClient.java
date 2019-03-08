@@ -18,40 +18,41 @@
 
 package org.wso2.synapse.unittest.client;
 
-import com.cedarsoftware.util.io.JsonWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.wso2.synapse.unittest.client.data.holders.ArtifactData;
+import org.wso2.synapse.unittest.client.data.holders.MockServiceData;
 import org.wso2.synapse.unittest.client.data.holders.TestCaseData;
 
 /**
- * Main class of the unit testing framework for synapse
- * Initialize and maintain the workflow of the framework
+ * Descriptor file read class in unit test framework
  */
 public class UnitTestClient {
 
     private static Logger logger = LogManager.getLogger(UnitTestClient.class.getName());
 
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
 
         logger.info("Unit testing client started");
 
         String descriptorFilePath = args[0];
         String synapseHost = args[1];
-        String SynapsePort = args[2];
+        String synapsePort = args[2];
 
         //create DescriptorFileReader object to read the descriptor file
-        DescriptorFileReader descriptorReader = new DescriptorFileReader();
-        ArtifactData readArtifactData = descriptorReader.readArtifactData(descriptorFilePath);
-        TestCaseData readTestCaseData = descriptorReader.readTestCaseData(descriptorFilePath);
+        DescriptorFileReader descriptorReader = new DescriptorFileReader(descriptorFilePath);
+        ArtifactData readArtifactData = descriptorReader.readArtifactData();
+        TestCaseData readTestCaseData = descriptorReader.readTestCaseData();
+        MockServiceData readMockServiceData = descriptorReader.readMockServiceData();
 
         MessageConstructor deployableMessage = new MessageConstructor();
-        JSONObject deployableJSON = deployableMessage.generateDeployMessage(readArtifactData, readTestCaseData);
-
-        TCPClient tcpClient = new TCPClient(synapseHost, SynapsePort);
-        tcpClient.sendData(deployableJSON);
+        JSONObject deployableJSON = deployableMessage.
+                generateDeployMessage(readArtifactData, readTestCaseData, readMockServiceData);
+//
+//        TCPClient tcpClient = new TCPClient(synapseHost, synapsePort);
+//        tcpClient.sendData(deployableJSON);
 
         logger.info("Unit testing client stopped");
     }

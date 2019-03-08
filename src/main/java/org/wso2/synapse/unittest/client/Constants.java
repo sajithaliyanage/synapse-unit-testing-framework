@@ -36,10 +36,14 @@ public class Constants {
     public static final String MOCK_SERVICE_COUNT = "mock-services-count";
     public static final String SERVICE_NAME = "service-name";
     public static final String SERVICE_HOST = "mock-service-url";
-    public static final String SERVICE_PAYLOAD = "mock-service-json-payload";
+    public static final String SERVICE_PAYLOAD = "mock-service-payload";
     public static final String SERVICE_TYPE = "mock-service-type";
-    public static final String SERVICE_RESPONSE = "mock-service-expected-json-response";
+    public static final String SERVICE_RESPONSE = "mock-service-expected-response";
     public static final String MOCK_SERVICES = "mock-services";
     public static final String MOCK_SERVICE = "mock-service";
+    public static final String END_POINT = "endpoint";
+    public static final String URI = "uri";
+    public static final String URI_TEMPLATE = "uri-template";
+    public static final String METHOD = "method";
 
 }
