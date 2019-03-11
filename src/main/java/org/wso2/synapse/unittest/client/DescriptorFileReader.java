@@ -62,7 +62,7 @@ public class DescriptorFileReader {
      *
      * @return dataHolder object with artifact data
      */
-    ArtifactData readArtifactData() {
+    ArtifactData readArtifactData() throws NullPointerException {
         ArtifactData artifactDataHolder = new ArtifactData();
 
         //Read test case count from descriptor file
@@ -74,6 +74,26 @@ public class DescriptorFileReader {
         //Read artifact from descriptor file
         QName qualifiedArtifact = new QName("", ARTIFACT, "");
         OMElement artifactNode = importXMLFile.getFirstChildWithName(qualifiedArtifact);
+
+        //check if artifact or artifact-file available in descriptor file
+        if (artifactNode == null) {
+
+            QName qualifiedArtifactFile = new QName("", ARTIFACT_FILE, "");
+            OMElement artifactFileNode = importXMLFile.getFirstChildWithName(qualifiedArtifactFile);
+            String artifactFilePath = artifactFileNode.getText();
+
+            try {
+                String artifactFileAsString = FileUtils.readFileToString(new File(artifactFilePath));
+                artifactNode = AXIOMUtil.stringToOM(artifactFileAsString);
+
+                if (artifactNode == null) {
+                    throw new NullPointerException();
+                }
+            } catch (Exception e) {
+                logger.error("Artifact file reading failed", e);
+            }
+        }
+
         String artifact = artifactNode.getFirstElement().toString();
         artifactDataHolder.setArtifact(artifact);
 
@@ -97,7 +117,7 @@ public class DescriptorFileReader {
      *
      * @return testCaseDataHolder object with test case data
      */
-    TestCaseData readTestCaseData() {
+    TestCaseData readTestCaseData() throws NullPointerException {
 
         TestCaseData testCaseDataHolder = new TestCaseData();
 
@@ -146,7 +166,7 @@ public class DescriptorFileReader {
      *
      * @return mockServiceDataHolder object with test case data
      */
-    MockServiceData readMockServiceData() {
+    MockServiceData readMockServiceData() throws NullPointerException {
 
         MockServiceData mockServiceDataHolder = new MockServiceData();
 

@@ -31,6 +31,7 @@ public class Constants {
     public static final String ARTIFACT_NAME_ATTRIBUTE = "name";
     public static final String ARTIFACT_NAME = "artifact-name";
     public static final String ARTIFACT = "artifact";
+    public static final String ARTIFACT_FILE = "artifact-file";
     public static final String EXPECTED_PROPERTY_VALUES = "expected-property-values";
     public static final String EXPECTED_PAYLOAD = "expected-payload";
 

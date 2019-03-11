@@ -44,12 +44,20 @@ public class UnitTestClient {
         String descriptorFilePath = args[0];
         String synapseHost = args[1];
         String synapsePort = args[2];
+        ArtifactData readArtifactData = null;
+        TestCaseData readTestCaseData = null;
+        MockServiceData readMockServiceData = null;
 
-        //create DescriptorFileReader object to read the descriptor file
-        DescriptorFileReader descriptorReader = new DescriptorFileReader(descriptorFilePath);
-        ArtifactData readArtifactData = descriptorReader.readArtifactData();
-        TestCaseData readTestCaseData = descriptorReader.readTestCaseData();
-        MockServiceData readMockServiceData = descriptorReader.readMockServiceData();
+        //Read descriptor file and store data relevant data holders
+        try {
+            DescriptorFileReader descriptorReader = new DescriptorFileReader(descriptorFilePath);
+            readArtifactData = descriptorReader.readArtifactData();
+            readTestCaseData = descriptorReader.readTestCaseData();
+            readMockServiceData = descriptorReader.readMockServiceData();
+
+        } catch (NullPointerException e) {
+            logger.error("Descriptor file read failed - " + e);
+        }
 
         MessageConstructor deployableMessage = new MessageConstructor();
         JSONObject deployableJSON = deployableMessage.

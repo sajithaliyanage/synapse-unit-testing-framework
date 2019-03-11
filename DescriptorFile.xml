@@ -13,6 +13,7 @@
             <log level="full" />
         </sequence>
     </artifact>
+    <!--<artifact-file>/Users/sajithaliyanage/Documents/Projects/synapse-unit-testing-framework/seq.xml</artifact-file>-->
 
     <artifact-type>sequence</artifact-type>
 
