@@ -32,20 +32,27 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.net.Socket;
+import java.util.ArrayList;
 
+import static org.awaitility.Awaitility.await;
 import static org.wso2.synapse.unittest.client.Constants.*;
 
 
 /**
- * Class responsible for modify the artifact data
+ * Class responsible for modify the artifact data.
+ * creates mock services as in descriptor file.
  */
-public class ConfigModuler {
+public class ConfigModifier {
 
     private static Logger logger = LogManager.getLogger(UnitTestClient.class.getName());
 
     public static String endPointModifier(String artifact, MockServiceData mockServiceData) {
+
+        ArrayList<Integer> mockServicePorts = new ArrayList<Integer>();
 
         try {
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -73,8 +80,12 @@ public class ConfigModuler {
                         int port = mockServiceData.getServicePort(serviceElementIndex);
                         String path = mockServiceData.getServicePath(serviceElementIndex);
                         String method = mockServiceData.getServiceType(serviceElementIndex);
-                        String inputPayload = mockServiceData.getServicePayload(serviceElementIndex);
-                        String response = mockServiceData.getServiceResponse(serviceElementIndex);
+                        String inputPayloadWithoutWhitespace = mockServiceData.getServicePayload(serviceElementIndex)
+                                .replaceAll(WHITESPACE_REGEX, "");
+                        String responseWithoutWhitespace = mockServiceData.getServiceResponse(serviceElementIndex)
+                                .replaceAll(WHITESPACE_REGEX, "");
+                        String serviceURL = HTTP + serviceHostUrl + ":" + port + path;
+                        mockServicePorts.add(port);
 
                         NodeList childNodesOfEndPoint = endPointNode.getChildNodes();
                         Node addressNode = childNodesOfEndPoint.item(1);
@@ -85,18 +96,19 @@ public class ConfigModuler {
                             Attr attribute = (Attr) attributeListOfAddress.item(y);
 
                             if (attribute.getNodeName().equals(URI)) {
-                                attributeListOfAddress.getNamedItem(URI).setNodeValue(serviceHostUrl);
+                                attributeListOfAddress.getNamedItem(URI).setNodeValue(serviceURL);
                                 break;
 
                             } else if (attribute.getNodeName().equals(URI_TEMPLATE)) {
-                                attributeListOfAddress.getNamedItem(URI_TEMPLATE).setNodeValue(serviceHostUrl);
+                                attributeListOfAddress.getNamedItem(URI_TEMPLATE).setNodeValue(serviceURL);
                                 attributeListOfAddress.getNamedItem(METHOD).setNodeValue(serviceMethod);
                                 break;
                             }
                         }
 
                         logger.info("Mock service creator ready to start service for " + valueOfName);
-                        MockServiceCreator.startServer(valueOfName, host , port, path , method , inputPayload , response);
+                        MockServiceCreator.startServer(valueOfName, host , port, path , method ,
+                                inputPayloadWithoutWhitespace , responseWithoutWhitespace);
                     }
                 }
             }
@@ -108,6 +120,16 @@ public class ConfigModuler {
             Transformer transformer = tf.newTransformer();
             transformer.transform(domSource, result);
 
+
+            //check services are ready to serve
+            logger.info("Thread waiting for mock service(s) starting");
+            for (int x = 0; x < mockServicePorts.size(); x++) {
+                int port = mockServicePorts.get(x);
+                await().until(() -> checkPortAvailability(port));
+            }
+
+            logger.info("Mock service(s) started");
+
             return  writer.toString();
 
         } catch (Exception e) {
@@ -116,6 +138,17 @@ public class ConfigModuler {
 
 
         return artifact;
+    }
+
+    private static boolean checkPortAvailability(int port) {
+        boolean isOccupied;
+        try (Socket ignored = new Socket("localhost", port)) {
+            isOccupied = true;
+        } catch (IOException ignored) {
+            isOccupied = false;
+        }
+
+        return isOccupied;
     }
 }
 

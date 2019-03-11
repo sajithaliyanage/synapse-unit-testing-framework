@@ -21,6 +21,7 @@
 package org.wso2.synapse.unittest.client.mock.services.core;
 
 import org.apache.log4j.Logger;
+import org.wso2.synapse.unittest.client.mock.services.MockServiceCreator;
 import org.wso2.synapse.unittest.client.mock.services.http.HTTPProtocolEmulator;
 
 public class Emulator extends Thread {
@@ -34,6 +35,8 @@ public class Emulator extends Thread {
     }
 
     public void run() {
+        MockServiceCreator.mockServiceThreadIds.add(Thread.currentThread().getId());
+
         try {
             if (EmulatorType.HTTP_CONSUMER.equals(emulatorType)) {
                 validateInput(httpProtocolEmulator.getConsumerContext());
@@ -48,9 +51,9 @@ public class Emulator extends Thread {
     }
 
     public void shutdown(EmulatorType emulatorType) {
-        if(EmulatorType.HTTP_CONSUMER.equals(emulatorType)) {
+        if (EmulatorType.HTTP_CONSUMER.equals(emulatorType)) {
             httpProtocolEmulator.getHttpEmulatorConsumerInitializer().shutdown();
-        } else if(EmulatorType.HTTP_PRODUCER.equals(emulatorType)) {
+        } else if (EmulatorType.HTTP_PRODUCER.equals(emulatorType)) {
             httpProtocolEmulator.getHttpEmulatorProducerInitializer().shutdown();
         }
         log.info("Emulator shutdown successfully.......");

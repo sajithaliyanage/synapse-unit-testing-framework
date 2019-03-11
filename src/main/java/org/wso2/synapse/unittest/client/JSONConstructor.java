@@ -22,7 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Class of the JSON constructor for artifact data
+ * Class of the JSON constructor for artifact data.
  */
 public class JSONConstructor {
 
@@ -30,73 +30,73 @@ public class JSONConstructor {
     private JSONArray jsonArrayDataHolder;
 
     /**
-     * Initialized JSON object
+     * Initialized JSON object.
      */
-    public void initialize(){
+    public void initialize() {
         jsonDataHolder = new JSONObject();
     }
 
     /**
-     * Initialized JSON Array
+     * Initialized JSON Array.
      */
-    public void initializeArray(){
+    public void initializeArray() {
         jsonArrayDataHolder = new JSONArray();
     }
 
     /**
-     * Append key-value pairs into the JSON object initiated
+     * Append key-value pairs into the JSON object initiated.
      *
-     * @param key JSON key
+     * @param key   JSON key
      * @param value JSON string value of the key
      */
-    public void setAttribute(String key, String value){
+    public void setAttribute(String key, String value) {
         jsonDataHolder.put(key, value);
     }
 
     /**
-     * Append key-value pairs into the JSON Array Object initiated
+     * Append key-value pairs into the JSON Array Object initiated.
      *
      * @param jsonArrayElement as child in the array
      */
-    public void setAttributeForArray(JSONObject jsonArrayElement){
+    public void setAttributeForArray(JSONObject jsonArrayElement) {
         jsonArrayDataHolder.put(jsonArrayElement);
     }
 
     /**
-     * Append key-value pairs into the JSON object initiated
+     * Append key-value pairs into the JSON object initiated.
      *
-     * @param key JSON key
+     * @param key   JSON key
      * @param value JSON int value of the key
      */
-    public void setAttribute(String key, int value){
+    public void setAttribute(String key, int value) {
         jsonDataHolder.put(key, value);
     }
 
     /**
-     * Append key-value pairs into the JSON object initiated
+     * Append key-value pairs into the JSON object initiated.
      *
-     * @param key JSON key
+     * @param key   JSON key
      * @param value JSON value of the key
      */
-    public void setAttribute(String key, JSONArray value){
+    public void setAttribute(String key, JSONArray value) {
         jsonDataHolder.put(key, value);
     }
 
     /**
-     * Return JSON object
+     * Return JSON object.
      *
      * @return JSONObject
      */
-    public JSONObject getJSONDataHolder(){
+    public JSONObject getJSONDataHolder() {
         return this.jsonDataHolder;
     }
 
     /**
-     * Return JSON array
+     * Return JSON array.
      *
      * @return JSONArray
      */
-    public JSONArray getJSONArrayDataHolder(){
+    public JSONArray getJSONArrayDataHolder() {
         return this.jsonArrayDataHolder;
     }
 

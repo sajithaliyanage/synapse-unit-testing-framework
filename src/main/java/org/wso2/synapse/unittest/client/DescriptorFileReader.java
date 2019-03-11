@@ -27,31 +27,29 @@ import org.wso2.synapse.unittest.client.data.holders.ArtifactData;
 import org.wso2.synapse.unittest.client.data.holders.MockServiceData;
 import org.wso2.synapse.unittest.client.data.holders.TestCaseData;
 
-
 import java.io.File;
-import java.io.IOException;
 import javax.xml.namespace.QName;
-import javax.xml.stream.XMLStreamException;
 
+import static org.apache.synapse.libraries.util.LibDeployerConstants.ARTIFACT;
 import static org.wso2.synapse.unittest.client.Constants.*;
 
 /**
- * Descriptor file read class in unit test framework
+ * Descriptor file read class in unit test framework.
  */
 public class DescriptorFileReader {
 
     private static Logger logger = LogManager.getLogger(UnitTestClient.class.getName());
     private OMElement importXMLFile = null;
 
+    /**
+     * Constructor of the DescriptorFileReader class.
+     * @param descriptorFilePath defines the file path of descriptor.xml
+     */
     DescriptorFileReader(String descriptorFilePath) {
         try {
             String descriptorFileAsString = FileUtils.readFileToString(new File(descriptorFilePath));
             this.importXMLFile = AXIOMUtil.stringToOM(descriptorFileAsString);
 
-        } catch (XMLStreamException e) {
-            logger.error(e);
-        } catch (IOException e) {
-            logger.error(e);
         } catch (Exception e) {
             logger.error(e);
         }
@@ -85,10 +83,8 @@ public class DescriptorFileReader {
         String artifactType = (artifactTypeNode.getText());
         artifactDataHolder.setArtifactType(artifactType);
 
-        //Read artifact type from descriptor file
-        QName qualifiedArtifactName = new QName("", ARTIFACT_NAME, "");
-        OMElement artifactNameNode = importXMLFile.getFirstChildWithName(qualifiedArtifactName);
-        String artifactName = (artifactNameNode.getText());
+        //Read artifact name from descriptor file
+        String artifactName = artifactNode.getFirstElement().getAttributeValue(new QName(ARTIFACT_NAME_ATTRIBUTE));
         artifactDataHolder.setArtifactName(artifactName);
 
         logger.info("Artifact data from descriptor file read successfully");

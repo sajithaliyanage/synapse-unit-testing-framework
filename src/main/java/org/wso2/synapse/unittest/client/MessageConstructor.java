@@ -30,7 +30,7 @@ import java.util.Base64;
 import static org.wso2.synapse.unittest.client.Constants.*;
 
 /**
- * Class of the message constructor for Synapse unit test framework
+ * Class of the message constructor for Synapse unit test framework.
  * Create deployable JSON object from data holders
  * Update deployable JSON object as Config Modifier
  */
@@ -53,7 +53,7 @@ public class MessageConstructor {
 
         //configure the artifact if there are mock-services to append
         if (mockServiceData.getMockServicesCount() > 0) {
-            configuredArtifact = ConfigModuler.endPointModifier(artifactDataHolder.getArtifact(), mockServiceData);
+            configuredArtifact = ConfigModifier.endPointModifier(artifactDataHolder.getArtifact(), mockServiceData);
 
         } else {
             configuredArtifact = artifactDataHolder.getArtifact();
@@ -63,10 +63,12 @@ public class MessageConstructor {
             jsonDataHolder.initialize();
 
             //Add artifact data from data holder to json object
-            jsonDataHolder.setAttribute(ARTIFACT, Base64.getEncoder().encodeToString(configuredArtifact.getBytes()));
-            jsonDataHolder.setAttribute(ARTIFACT_TYPE, Base64.getEncoder().encodeToString(artifactDataHolder.getArtifactType().getBytes()));
-            jsonDataHolder.setAttribute(ARTIFACT_NAME, Base64.getEncoder().encodeToString(artifactDataHolder.getArtifactName().getBytes()));
-            jsonDataHolder.setAttribute(TEST_CASES_COUNT, artifactDataHolder.getTestCaseCount());
+            jsonDataHolder.setAttribute(ARTIFACT , Base64.getEncoder().encodeToString(configuredArtifact.getBytes()));
+            jsonDataHolder.setAttribute(ARTIFACT_TYPE ,
+                    Base64.getEncoder().encodeToString(artifactDataHolder.getArtifactType().getBytes()));
+            jsonDataHolder.setAttribute(ARTIFACT_NAME ,
+                    Base64.getEncoder().encodeToString(artifactDataHolder.getArtifactName().getBytes()));
+            jsonDataHolder.setAttribute(TEST_CASES_COUNT , artifactDataHolder.getTestCaseCount());
 
             //Add  test-case data from data holder to json object
             JSONConstructor jsonTestCaseDataHolderArray = new JSONConstructor();
@@ -94,8 +96,6 @@ public class MessageConstructor {
         } catch (Exception e) {
             logger.error(e);
         }
-
-
 
         return jsonDataHolder.getJSONDataHolder();
     }

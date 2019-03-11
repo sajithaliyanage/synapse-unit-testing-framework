@@ -17,7 +17,6 @@
         </proxy>
     </artifact>
 
-    <artifact-name>proxyTest</artifact-name>
     <artifact-type>proxy</artifact-type>
 
     <test-cases-count>1</test-cases-count>
@@ -38,42 +37,30 @@
             </expected-property-values>
 
             <expected-payload>
-                {"fname":"Peter", "lname":"Stallone", "age":22, "address":{"line":"20 Palm Grove", "city":"Colombo 03", "country":"Sri Lanka"}}
+                {"fname":"Peter", "lname":"Stallone","age":22, "address":{"line":"20 Palm Grove", "city":"Colombo 03", "country":"Sri Lanka"}}
             </expected-payload>
 
         </test-case-1>
-        <!--<test-case-2>-->
-            <!--<input-xml-payload>Hi-->
-            <!--</input-xml-payload>-->
-
-            <!--<expected-property-values>test-->
-            <!--</expected-property-values>-->
-
-            <!--<expected-payload>-->
-                <!--test2-->
-            <!--</expected-payload>-->
-
-        <!--</test-case-2>-->
     </test-cases>
 
-    <mock-services-count>1</mock-services-count>
+    <mock-services-count>0</mock-services-count>
     <mock-services>
         <mock-service-1>
-            <service-name>Hospital</service-name>
-            <mock-service-url>http://localhost:9090/query/doctor</mock-service-url>
-            <mock-service-type>POST</mock-service-type>
-            <mock-service-json-payload>
+            <service-name>QueryDoctorEP</service-name>
+            <mock-service-host>localhost</mock-service-host>
+            <mock-service-port>9090</mock-service-port>
+            <mock-service-path>/example3/info</mock-service-path>
+            <mock-service-type>get</mock-service-type>
+            <mock-service-payload>
                 {
-                    "name":"John Smith",
-                    "age":23,
-                    "hospital":"Central Hospital"
+                "name":"John Smith",
+                "age":23,
+                "hospital":"Central Hospital"
                 }
-            </mock-service-json-payload>
-            <mock-service-expected-json-response>
-                {
-                    "hospital":"Central Hospital"
-                }
-            </mock-service-expected-json-response>
+            </mock-service-payload>
+            <mock-service-expected-response>
+                {"fname":"Peter", "lname":"Stallone", "age":22, "address":{"line":"20 Palm Grove", "city":"Colombo 03", "country":"Sri Lanka"}}
+            </mock-service-expected-response>
         </mock-service-1>
     </mock-services>
 </synapse-unit-test>

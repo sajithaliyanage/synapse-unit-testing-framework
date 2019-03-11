@@ -19,7 +19,7 @@
 package org.wso2.synapse.unittest.client;
 
 /**
- * Constants for unit testing framework for synapse
+ * Constants for unit testing framework for synapse.
  */
 public class Constants {
 
@@ -28,6 +28,7 @@ public class Constants {
     public static final String TEST_CASES_COUNT = "test-cases-count";
     public static final String INPUT_XML_PAYLOAD = "input-xml-payload";
     public static final String ARTIFACT_TYPE = "artifact-type";
+    public static final String ARTIFACT_NAME_ATTRIBUTE = "name";
     public static final String ARTIFACT_NAME = "artifact-name";
     public static final String ARTIFACT = "artifact";
     public static final String EXPECTED_PROPERTY_VALUES = "expected-property-values";
@@ -48,9 +49,12 @@ public class Constants {
     public static final String URI_TEMPLATE = "uri-template";
     public static final String METHOD = "method";
 
+    public static final String HTTP = "http://";
     public static final String GET_METHOD = "GET";
     public static final String POST_METHOD = "POST";
     public static final String PUT_METHOD = "PUT";
     public static final String DELETE_METHOD = "DELETE";
+
+    public static final String WHITESPACE_REGEX = "\\s(?=(\"[^\"]*\"|[^\"])*$)";
 
 }

@@ -25,17 +25,18 @@ import java.io.*;
 import java.net.Socket;
 
 /**
- * TCP client for initializing the socket and sending and receiving data through the socket
+ * TCP client for initializing the socket and sending and receiving data through the socket.
  */
 public class TCPClient {
+
 
     private static Socket clientSocket;
     private static Logger logger = LogManager.getLogger(UnitTestClient.class.getName());
 
     /**
-     * Initializing the TCP socket
-     * @param synapseHost
-     * @param synapsePort
+     * Initializing the TCP socket.
+     * @param synapseHost socket initializing host
+     * @param synapsePort socket initializing port
      */
     public TCPClient(String synapseHost, String synapsePort) {
 
@@ -48,40 +49,53 @@ public class TCPClient {
     }
 
     /**
-     * Method of sending the artifact and test data to the synapse unit test agent
-     * Receive response from the server about unit test result
-     * @param messageToBeSent deployable JSON object with artifact and test case data
+     * Method of receiving response from the synapse unit test agent.
      */
-    public void sendData(JSONObject messageToBeSent) {
+    public void readData() {
+
+        logger.info("Waiting for synapse unit test agent response");
+
         try {
-            OutputStream outToServer = clientSocket.getOutputStream();
-            DataOutputStream out = new DataOutputStream(outToServer);
-            out.writeUTF(messageToBeSent.toString());
+            InputStream inputStream = clientSocket.getInputStream();
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 
-            logger.info("Artifact and Test case data sent to the Synapse unit test agent");
-            logger.info("Waiting for server response");
+            String response = (String) objectInputStream.readObject();
+            logger.info("Received unit test agent response - " + response);
 
-            InputStream inFromServer = clientSocket.getInputStream();
-            DataInputStream in = new DataInputStream(inFromServer);
+        }  catch (Exception e) {
+            logger.error("Error in getting response from the synapse unit test agent", e);
 
-            logger.info("Response from server: " + in.readUTF());
-
-        } catch (Exception e) {
-            logger.error("Exception in writing data to the socket", e);
         } finally {
-            closeConnection();
+            closeSocket();
         }
     }
 
     /**
-     * Method of closing connection of TCP
+     * Method of sending the artifact and test data to the synapse unit test agent.
+     * @param messageToBeSent deployable JSON object with artifact and test case data
      */
-    public void closeConnection() {
+    public void writeData(JSONObject messageToBeSent) {
+
         try {
-            clientSocket.close();
-        } catch (IOException e) {
-            logger.error(e);
+            OutputStream outputStream = clientSocket.getOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream.writeObject(messageToBeSent.toString());
+            outputStream.flush();
+
+            logger.info("Artifact data and test cases data send to the synapse agent successfully");
+        } catch (Exception e) {
+            logger.error("Error while sending deployable data to the synapse agent ", e);
         }
     }
 
+    /**
+     * Method of closing connection of TCP.
+     */
+    private void closeSocket() {
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
+            logger.error("Error while closing TCP client socket connection", e);
+        }
+    }
 }

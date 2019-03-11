@@ -47,6 +47,8 @@ public class HttpEmulatorConsumerInitializer {
             ChannelFuture f = serverBootstrap.bind(consumerContext.getHost(), consumerContext.getPort())
                     .sync();
             f.channel().closeFuture().sync();
+
+
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();

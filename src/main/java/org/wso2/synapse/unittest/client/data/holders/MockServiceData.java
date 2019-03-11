@@ -24,9 +24,9 @@ import java.util.Map;
 
 
 /**
- * Mock service data holder class in unit test framework
+ * Mock service data holder class in unit test framework.
  */
-public class MockServiceData {
+public class MockServiceData extends Thread {
 
     private int mockServicesCount = 0;
     private Map<String, Integer> serviceNameMap = new HashMap<String, Integer>();

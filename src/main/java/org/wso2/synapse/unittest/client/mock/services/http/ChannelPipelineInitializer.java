@@ -46,9 +46,9 @@ public class ChannelPipelineInitializer extends ChannelInitializer<SocketChannel
 
     @Override
     public void initChannel(SocketChannel ch) {
-        if(EmulatorType.HTTP_CONSUMER.equals(emulatorType)) {
+        if (EmulatorType.HTTP_CONSUMER.equals(emulatorType)) {
             initializeHttpConsumerChannel(ch);
-        } else if(EmulatorType.HTTP_PRODUCER.equals(emulatorType)) {
+        } else if (EmulatorType.HTTP_PRODUCER.equals(emulatorType)) {
             initializeHttpProducerChannel(ch);
         }
     }
@@ -73,7 +73,8 @@ public class ChannelPipelineInitializer extends ChannelInitializer<SocketChannel
         }
         pipeline.addLast(new HttpClientCodec());
         pipeline.addLast(new HttpContentDecompressor());
-        pipeline.addLast(new org.wso2.synapse.unittest.client.mock.services.http.producer.HttpResponseProcessHandler(producerOutgoingMessage));
+        pipeline.addLast(new org.wso2.synapse.unittest.client.mock.services.http.producer.
+                HttpResponseProcessHandler(producerOutgoingMessage));
     }
 
     public void setProducerOutgoingMessage(OutgoingMessage producerOutgoingMessage) {

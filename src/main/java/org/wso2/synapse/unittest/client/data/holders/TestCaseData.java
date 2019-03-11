@@ -19,6 +19,9 @@ package org.wso2.synapse.unittest.client.data.holders;
 
 import java.util.ArrayList;
 
+/**
+ * Class responsible for the holding the data of test case data.
+ */
 public class TestCaseData {
 
     private ArrayList<String> inputXmlPayloadArray = new ArrayList<String>();

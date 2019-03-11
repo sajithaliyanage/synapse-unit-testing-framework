@@ -2,7 +2,7 @@
 
 <synapse-unit-test>
     <artifact>
-        <proxy name="ArithmaticOper22" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+        <proxy name="ArithmaticOpe3" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
             <target>
                 <inSequence>
                     <log description="Log Request Payload" level="full"/>
@@ -66,7 +66,6 @@
         </proxy>
     </artifact>
 
-    <artifact-name>ArithmaticOper22</artifact-name>
     <artifact-type>proxy</artifact-type>
 
     <test-cases-count>2</test-cases-count>
@@ -127,24 +126,24 @@
         </test-case-2>
     </test-cases>
 
-    <mock-services-count>1</mock-services-count>
+    <mock-services-count>0</mock-services-count>
     <mock-services>
         <mock-service-1>
-            <service-name>Hospital</service-name>
-            <mock-service-url>http://localhost:9090/query/doctor</mock-service-url>
-            <mock-service-type>POST</mock-service-type>
-            <mock-service-json-payload>
+            <service-name>QueryDoctorEP</service-name>
+            <mock-service-host>127.0.0.1</mock-service-host>
+            <mock-service-port>9090</mock-service-port>
+            <mock-service-path>/example3/info</mock-service-path>
+            <mock-service-type>GET</mock-service-type>
+            <mock-service-payload>
                 {
-                    "name":"John Smith",
-                    "age":23,
-                    "hospital":"Central Hospital"
+                "name":"John Smith",
+                "age":23,
+                "hospital":"Central Hospital"
                 }
-            </mock-service-json-payload>
-            <mock-service-expected-json-response>
-                {
-                    "hospital":"Central Hospital"
-                }
-            </mock-service-expected-json-response>
+            </mock-service-payload>
+            <mock-service-expected-response>
+                {"fname":"Peter", "lname":"Stallone", "age":22, "address":{"line":"20 Palm Grove", "city":"Colombo 03", "country":"Sri Lanka"}}
+            </mock-service-expected-response>
         </mock-service-1>
     </mock-services>
 </synapse-unit-test>

@@ -24,15 +24,19 @@ import org.json.JSONObject;
 import org.wso2.synapse.unittest.client.data.holders.ArtifactData;
 import org.wso2.synapse.unittest.client.data.holders.MockServiceData;
 import org.wso2.synapse.unittest.client.data.holders.TestCaseData;
+import org.wso2.synapse.unittest.client.mock.services.MockServiceCreator;
+
 
 /**
- * Descriptor file read class in unit test framework
+ * Descriptor file read class in unit test framework.
  */
 public class UnitTestClient {
 
     private static Logger logger = LogManager.getLogger(UnitTestClient.class.getName());
 
-
+    /**
+     * Main method of the synapse unit testing client.
+     */
     public static void main(String args[]) {
 
         logger.info("Unit testing client started");
@@ -50,10 +54,14 @@ public class UnitTestClient {
         MessageConstructor deployableMessage = new MessageConstructor();
         JSONObject deployableJSON = deployableMessage.
                 generateDeployMessage(readArtifactData, readTestCaseData, readMockServiceData);
-//
-//        TCPClient tcpClient = new TCPClient(synapseHost, synapsePort);
-//        tcpClient.sendData(deployableJSON);
 
+        //create tcp connection, send deployable JSON and get the response from the server
+        TCPClient tcpClient = new TCPClient(synapseHost, synapsePort);
+        tcpClient.writeData(deployableJSON);
+        tcpClient.readData();
+
+        //stop mock services created
+        MockServiceCreator.stopServices();
         logger.info("Unit testing client stopped");
     }
 

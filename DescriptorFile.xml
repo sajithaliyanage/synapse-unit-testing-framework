@@ -14,9 +14,7 @@
         </sequence>
     </artifact>
 
-    <artifact-name>sequenceTest</artifact-name>
     <artifact-type>sequence</artifact-type>
-
 
     <test-cases-count>1</test-cases-count>
     <test-cases>
@@ -79,21 +77,9 @@
             </expected-payload>
 
         </test-case-1>
-        <!--<test-case-2>-->
-            <!--<input-xml-payload>Hi-->
-            <!--</input-xml-payload>-->
-
-            <!--<expected-property-values>test-->
-            <!--</expected-property-values>-->
-
-            <!--<expected-payload>-->
-                <!--test2-->
-            <!--</expected-payload>-->
-
-        <!--</test-case-2>-->
     </test-cases>
 
-    <mock-services-count>1</mock-services-count>
+    <mock-services-count>0</mock-services-count>
     <mock-services>
         <mock-service-1>
             <service-name>Hospital</service-name>
@@ -113,4 +99,5 @@
             </mock-service-expected-response>
         </mock-service-1>
     </mock-services>
+
 </synapse-unit-test>

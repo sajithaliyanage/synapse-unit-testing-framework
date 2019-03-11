@@ -17,6 +17,9 @@
  */
 package org.wso2.synapse.unittest.client.data.holders;
 
+/**
+ * Class responsible for the holding the data of synapse configuration data.
+ */
 public class ArtifactData {
 
     private String artifactType;
