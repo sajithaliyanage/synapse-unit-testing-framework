@@ -30,8 +30,27 @@ import org.wso2.synapse.unittest.client.data.holders.TestCaseData;
 import java.io.File;
 import javax.xml.namespace.QName;
 
-import static org.apache.synapse.libraries.util.LibDeployerConstants.ARTIFACT;
-import static org.wso2.synapse.unittest.client.Constants.*;
+
+import static org.wso2.synapse.unittest.client.Constants.ARTIFACT;
+import static org.wso2.synapse.unittest.client.Constants.ARTIFACT_FILE;
+import static org.wso2.synapse.unittest.client.Constants.ARTIFACT_NAME_ATTRIBUTE;
+import static org.wso2.synapse.unittest.client.Constants.ARTIFACT_TYPE;
+import static org.wso2.synapse.unittest.client.Constants.EXPECTED_PAYLOAD;
+import static org.wso2.synapse.unittest.client.Constants.EXPECTED_PROPERTY_VALUES;
+import static org.wso2.synapse.unittest.client.Constants.INPUT_XML_PAYLOAD;
+import static org.wso2.synapse.unittest.client.Constants.MOCK_SERVICE;
+import static org.wso2.synapse.unittest.client.Constants.MOCK_SERVICES;
+import static org.wso2.synapse.unittest.client.Constants.MOCK_SERVICE_COUNT;
+import static org.wso2.synapse.unittest.client.Constants.SERVICE_HOST;
+import static org.wso2.synapse.unittest.client.Constants.SERVICE_NAME;
+import static org.wso2.synapse.unittest.client.Constants.SERVICE_PATH;
+import static org.wso2.synapse.unittest.client.Constants.SERVICE_PAYLOAD;
+import static org.wso2.synapse.unittest.client.Constants.SERVICE_PORT;
+import static org.wso2.synapse.unittest.client.Constants.SERVICE_RESPONSE;
+import static org.wso2.synapse.unittest.client.Constants.SERVICE_TYPE;
+import static org.wso2.synapse.unittest.client.Constants.TEST_CASE;
+import static org.wso2.synapse.unittest.client.Constants.TEST_CASES;
+import static org.wso2.synapse.unittest.client.Constants.TEST_CASES_COUNT;
 
 /**
  * Descriptor file read class in unit test framework.

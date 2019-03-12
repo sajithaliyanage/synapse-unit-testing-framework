@@ -21,25 +21,36 @@ package org.wso2.synapse.unittest.client;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.w3c.dom.*;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.wso2.synapse.unittest.client.data.holders.MockServiceData;
 import org.wso2.synapse.unittest.client.mock.services.MockServiceCreator;
 import org.xml.sax.InputSource;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.net.Socket;
+import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.net.Socket;
-import java.util.ArrayList;
+
 
 import static org.awaitility.Awaitility.await;
-import static org.wso2.synapse.unittest.client.Constants.*;
+import static org.wso2.synapse.unittest.client.Constants.END_POINT;
+import static org.wso2.synapse.unittest.client.Constants.HTTP;
+import static org.wso2.synapse.unittest.client.Constants.METHOD;
+import static org.wso2.synapse.unittest.client.Constants.URI;
+import static org.wso2.synapse.unittest.client.Constants.URI_TEMPLATE;
+import static org.wso2.synapse.unittest.client.Constants.WHITESPACE_REGEX;
 
 
 /**

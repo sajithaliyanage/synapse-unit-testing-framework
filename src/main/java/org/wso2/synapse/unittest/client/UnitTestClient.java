@@ -59,6 +59,7 @@ public class UnitTestClient {
             logger.error("Descriptor file read failed - " + e);
         }
 
+        //create deployable message for the synapse unit test agent
         MessageConstructor deployableMessage = new MessageConstructor();
         JSONObject deployableJSON = deployableMessage.
                 generateDeployMessage(readArtifactData, readTestCaseData, readMockServiceData);

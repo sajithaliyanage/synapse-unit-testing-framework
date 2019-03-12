@@ -27,7 +27,14 @@ import org.wso2.synapse.unittest.client.data.holders.TestCaseData;
 
 import java.util.Base64;
 
-import static org.wso2.synapse.unittest.client.Constants.*;
+import static org.wso2.synapse.unittest.client.Constants.ARTIFACT;
+import static org.wso2.synapse.unittest.client.Constants.ARTIFACT_NAME;
+import static org.wso2.synapse.unittest.client.Constants.ARTIFACT_TYPE;
+import static org.wso2.synapse.unittest.client.Constants.EXPECTED_PAYLOAD;
+import static org.wso2.synapse.unittest.client.Constants.EXPECTED_PROPERTY_VALUES;
+import static org.wso2.synapse.unittest.client.Constants.INPUT_XML_PAYLOAD;
+import static org.wso2.synapse.unittest.client.Constants.TEST_CASES;
+import static org.wso2.synapse.unittest.client.Constants.TEST_CASES_COUNT;
 
 /**
  * Class of the message constructor for Synapse unit test framework.
@@ -46,7 +53,8 @@ public class MessageConstructor {
      * @param artifactDataHolder object of ArtifactData which contains artifact data read from descriptor file
      * @return JSONObject which is ready to deploy via TCP server
      */
-    public JSONObject generateDeployMessage(ArtifactData artifactDataHolder, TestCaseData testCaseDataHolder, MockServiceData mockServiceData) {
+    public JSONObject generateDeployMessage(ArtifactData artifactDataHolder, TestCaseData testCaseDataHolder,
+                                            MockServiceData mockServiceData) {
 
         JSONConstructor jsonDataHolder = new JSONConstructor();
         String configuredArtifact;
