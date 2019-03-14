@@ -19,7 +19,6 @@ package org.wso2.synapse.unittest.client;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,10 +31,9 @@ import java.net.Socket;
 /**
  * TCP client for initializing the socket and sending and receiving data through the socket.
  */
-public class TCPClient {
+class TCPClient {
 
-
-    private static Socket clientSocket;
+    private Socket clientSocket;
     private static Logger logger = LogManager.getLogger(UnitTestClient.class.getName());
 
     /**
@@ -43,7 +41,7 @@ public class TCPClient {
      * @param synapseHost socket initializing host
      * @param synapsePort socket initializing port
      */
-    public TCPClient(String synapseHost, String synapsePort) {
+    TCPClient(String synapseHost, String synapsePort) {
 
         try {
             clientSocket = new Socket(synapseHost, Integer.parseInt(synapsePort));
@@ -56,12 +54,12 @@ public class TCPClient {
     /**
      * Method of receiving response from the synapse unit test agent.
      */
-    public void readData() {
+    void readData() {
 
         logger.info("Waiting for synapse unit test agent response");
 
-        try {
-            InputStream inputStream = clientSocket.getInputStream();
+        try (InputStream inputStream = clientSocket.getInputStream()) {
+
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 
             String response = (String) objectInputStream.readObject();
@@ -79,12 +77,12 @@ public class TCPClient {
      * Method of sending the artifact and test data to the synapse unit test agent.
      * @param messageToBeSent deployable JSON object with artifact and test case data
      */
-    public void writeData(JSONObject messageToBeSent) {
+    void writeData(String messageToBeSent) {
 
         try {
             OutputStream outputStream = clientSocket.getOutputStream();
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-            objectOutputStream.writeObject(messageToBeSent.toString());
+            objectOutputStream.writeObject(messageToBeSent);
             outputStream.flush();
 
             logger.info("Artifact data and test cases data send to the synapse agent successfully");

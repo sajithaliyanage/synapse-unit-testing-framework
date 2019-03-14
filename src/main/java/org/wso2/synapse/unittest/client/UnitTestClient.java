@@ -20,12 +20,6 @@ package org.wso2.synapse.unittest.client;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONObject;
-import org.wso2.synapse.unittest.client.data.holders.ArtifactData;
-import org.wso2.synapse.unittest.client.data.holders.MockServiceData;
-import org.wso2.synapse.unittest.client.data.holders.TestCaseData;
-import org.wso2.synapse.unittest.client.mock.services.MockServiceCreator;
-
 
 /**
  * Descriptor file read class in unit test framework.
@@ -37,40 +31,23 @@ public class UnitTestClient {
     /**
      * Main method of the synapse unit testing client.
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         logger.info("Unit testing client started");
 
         String descriptorFilePath = args[0];
         String synapseHost = args[1];
         String synapsePort = args[2];
-        ArtifactData readArtifactData = null;
-        TestCaseData readTestCaseData = null;
-        MockServiceData readMockServiceData = null;
 
-        //Read descriptor file and store data relevant data holders
-        try {
-            DescriptorFileReader descriptorReader = new DescriptorFileReader(descriptorFilePath);
-            readArtifactData = descriptorReader.readArtifactData();
-            readTestCaseData = descriptorReader.readTestCaseData();
-            readMockServiceData = descriptorReader.readMockServiceData();
+        //process descriptor data for send to the server
+        DescriptorFileReader descriptorReader = new DescriptorFileReader(descriptorFilePath);
+        String deployableMessage = descriptorReader.processArtifactData();
 
-        } catch (NullPointerException e) {
-            logger.error("Descriptor file read failed - " + e);
-        }
-
-        //create deployable message for the synapse unit test agent
-        MessageConstructor deployableMessage = new MessageConstructor();
-        JSONObject deployableJSON = deployableMessage.
-                generateDeployMessage(readArtifactData, readTestCaseData, readMockServiceData);
-
-        //create tcp connection, send deployable JSON and get the response from the server
+        //create tcp connection, send descriptor file to server and get the response from the server
         TCPClient tcpClient = new TCPClient(synapseHost, synapsePort);
-        tcpClient.writeData(deployableJSON);
+        tcpClient.writeData(deployableMessage);
         tcpClient.readData();
 
-        //stop mock services created
-        MockServiceCreator.stopServices();
         logger.info("Unit testing client stopped");
     }
 
