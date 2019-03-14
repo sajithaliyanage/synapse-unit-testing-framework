@@ -58,8 +58,8 @@ class TCPClient {
 
         logger.info("Waiting for synapse unit test agent response");
 
-        try (InputStream inputStream = clientSocket.getInputStream()) {
-
+        try {
+            InputStream inputStream = clientSocket.getInputStream();
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 
             String response = (String) objectInputStream.readObject();
