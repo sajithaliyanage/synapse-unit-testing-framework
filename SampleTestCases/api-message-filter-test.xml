@@ -34,20 +34,17 @@
         </api>
     </artifact>
 
-    <artifact-type>api</artifact-type>
-
-    <test-cases-count>1</test-cases-count>
     <test-cases>
-        <test-case-1>
-            <input-xml-payload>
+        <test-case>
+            <assert-input-payload>
                 <![CDATA[]]>
-            </input-xml-payload>
+            </assert-input-payload>
 
-            <expected-property-values>
+            <assert-expected-properties>
                 <![CDATA[<?xml version='1.0' encoding='UTF-8' ?>]]>
-            </expected-property-values>
+            </assert-expected-properties>
 
-            <expected-payload>
+            <assert-expected-payload>
                 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
                     <PhoneReturn xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ws.cdyne.com/PhoneVerify/query">
                     <Company>LEVEL 3 COMMUNICATIONS. LLC - </Company>
@@ -64,11 +61,9 @@
                     <TelecomState>VA</TelecomState><TelecomZip>23324</TelecomZip><TimeZone>EST</TimeZone><Lat /><Long />
                     <Wireless>false</Wireless><LRN>7576559199</LRN></PhoneReturn>
                 ]]>
-            </expected-payload>
+            </assert-expected-payload>
 
-        </test-case-1>
+        </test-case>
     </test-cases>
-
-    <mock-services-count>0</mock-services-count>
 
 </synapse-unit-test>

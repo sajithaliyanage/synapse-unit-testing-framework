@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <synapse-unit-test>
+
     <artifact-file>/Users/sajithaliyanage/Documents/Projects/synapse-unit-testing-framework/seq.xml</artifact-file>
 
-    <artifact-type>sequence</artifact-type>
-
-    <test-cases-count>1</test-cases-count>
     <test-cases>
-        <test-case-1>
-            <input-xml-payload>
+        <test-case>
+            <assert-input-payload>
                 <![CDATA[
                         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
                            <soapenv:Header />
@@ -23,55 +21,33 @@
                            </soapenv:Body>
                         </soapenv:Envelope>
                 ]]>
-            </input-xml-payload>
+            </assert-input-payload>
 
-            <expected-property-values>
+            <assert-expected-properties>
                 {
                     "WHERE":"before doing stuff",
                     "SAJITHA":"yes did it"
                 }
-            </expected-property-values>
+            </assert-expected-properties>
 
-            <expected-payload>
+            <assert-expected-payload>
                 <![CDATA[
                     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://services.samples/xsd" xmlns:ser="http://services.samples">
                        <soapenv:Header/>
                        <soapenv:Body>
-                          <ser:getQuote>
+                          <ser:getQuote  >
                              <!--Optional:-->
                              <ser:request>
                                 <!--Optional:-->
                                 <xsd:symbol>WSO2</xsd:symbol>
                                 <xsd:symbol>SUN</xsd:symbol>
                              </ser:request>
-                          </ser:getQuote>
+                          </ser:getQuote  >
                        </soapenv:Body>
                     </soapenv:Envelope>
                 ]]>
-            </expected-payload>
-
-        </test-case-1>
+            </assert-expected-payload>
+        </test-case>
     </test-cases>
-
-    <mock-services-count>0</mock-services-count>
-    <mock-services>
-        <mock-service-1>
-            <service-name>Hospital</service-name>
-            <mock-service-url>http://localhost:9090/query/doctor</mock-service-url>
-            <mock-service-type>POST</mock-service-type>
-            <mock-service-payload>
-                {
-                    "name":"John Smith",
-                    "age":23,
-                    "hospital":"Central Hospital"
-                }
-            </mock-service-payload>
-            <mock-service-expected-response>
-                {
-                    "hospital":"Central Hospital"
-                }
-            </mock-service-expected-response>
-        </mock-service-1>
-    </mock-services>
 
 </synapse-unit-test>

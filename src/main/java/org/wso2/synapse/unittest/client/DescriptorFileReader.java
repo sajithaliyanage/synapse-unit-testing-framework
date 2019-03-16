@@ -43,6 +43,7 @@ class DescriptorFileReader {
 
     /**
      * Constructor of the DescriptorFileReader class.
+     *
      * @param descriptorFilePath path of the descriptor file
      */
     DescriptorFileReader(String descriptorFilePath) {
@@ -59,7 +60,7 @@ class DescriptorFileReader {
      * Check that descriptor data includes artifact data.
      * If not read artifact from given file and append data into the artifact data
      *
-     * @return  descriptor data which is ready to send to the server
+     * @return descriptor data which is ready to send to the server
      */
     String processArtifactData() {
 

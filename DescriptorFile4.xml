@@ -66,12 +66,9 @@
         </proxy>
     </artifact>
 
-    <artifact-type>proxy</artifact-type>
-
-    <test-cases-count>2</test-cases-count>
     <test-cases>
-        <test-case-1>
-            <input-xml-payload>
+        <test-case>
+            <assert-input-payload>
                 <![CDATA[
                         <ArithmaticOperation>
                           <Operation>Add</Operation>
@@ -79,13 +76,13 @@
                           <Arg2>25</Arg2>
                         </ArithmaticOperation>
                 ]]>
-            </input-xml-payload>
+            </assert-input-payload>
 
-            <expected-property-values>
+            <assert-expected-properties>
                 <![CDATA[<?xml version='1.0' encoding='UTF-8' ?>]]>
-            </expected-property-values>
+            </assert-expected-properties>
 
-            <expected-payload>
+            <assert-expected-payload>
                 <![CDATA[<?xml version='1.0' encoding='UTF-8'?>
                 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
                     <SOAP-ENV:Body>
@@ -94,11 +91,11 @@
                         </AddIntegerResponse>
                     </SOAP-ENV:Body>
                 </SOAP-ENV:Envelope>]]>
-            </expected-payload>
+            </assert-expected-payload>
 
-        </test-case-1>
-        <test-case-2>
-            <input-xml-payload>
+        </test-case>
+        <test-case>
+            <assert-input-payload>
                 <![CDATA[
                         <ArithmaticOperation>
                           <Operation>Divide</Operation>
@@ -106,13 +103,13 @@
                           <Arg2>5</Arg2>
                         </ArithmaticOperation>
                 ]]>
-            </input-xml-payload>
+            </assert-input-payload>
 
-            <expected-property-values>
+            <assert-expected-properties>
                 <![CDATA[<?xml version='1.0' encoding='UTF-8' ?>]]>
-            </expected-property-values>
+            </assert-expected-properties>
 
-            <expected-payload>
+            <assert-expected-payload>
                 <![CDATA[<?xml version='1.0' encoding='UTF-8'?>
                 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
                     <SOAP-ENV:Body>
@@ -121,29 +118,9 @@
                         </DivideIntegerResponse>
                     </SOAP-ENV:Body>
                 </SOAP-ENV:Envelope>]]>
-            </expected-payload>
+            </assert-expected-payload>
 
-        </test-case-2>
+        </test-case>
     </test-cases>
 
-    <mock-services-count>0</mock-services-count>
-    <mock-services>
-        <mock-service-1>
-            <service-name>QueryDoctorEP</service-name>
-            <mock-service-host>127.0.0.1</mock-service-host>
-            <mock-service-port>9090</mock-service-port>
-            <mock-service-path>/example3/info</mock-service-path>
-            <mock-service-type>GET</mock-service-type>
-            <mock-service-payload>
-                {
-                "name":"John Smith",
-                "age":23,
-                "hospital":"Central Hospital"
-                }
-            </mock-service-payload>
-            <mock-service-expected-response>
-                {"fname":"Peter", "lname":"Stallone", "age":22, "address":{"line":"20 Palm Grove", "city":"Colombo 03", "country":"Sri Lanka"}}
-            </mock-service-expected-response>
-        </mock-service-1>
-    </mock-services>
 </synapse-unit-test>

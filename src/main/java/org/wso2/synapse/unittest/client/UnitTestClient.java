@@ -47,6 +47,7 @@ public class UnitTestClient {
         TCPClient tcpClient = new TCPClient(synapseHost, synapsePort);
         tcpClient.writeData(deployableMessage);
         tcpClient.readData();
+        tcpClient.closeSocket();
 
         logger.info("Unit testing client stopped");
     }

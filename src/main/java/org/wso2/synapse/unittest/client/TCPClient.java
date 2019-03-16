@@ -38,6 +38,7 @@ class TCPClient {
 
     /**
      * Initializing the TCP socket.
+     *
      * @param synapseHost socket initializing host
      * @param synapsePort socket initializing port
      */
@@ -65,16 +66,15 @@ class TCPClient {
             String response = (String) objectInputStream.readObject();
             logger.info("Received unit test agent response - " + response);
 
-        }  catch (Exception e) {
+        } catch (Exception e) {
             logger.error("Error in getting response from the synapse unit test agent", e);
 
-        } finally {
-            closeSocket();
         }
     }
 
     /**
      * Method of sending the artifact and test data to the synapse unit test agent.
+     *
      * @param messageToBeSent deployable JSON object with artifact and test case data
      */
     void writeData(String messageToBeSent) {
@@ -94,7 +94,7 @@ class TCPClient {
     /**
      * Method of closing connection of TCP.
      */
-    private void closeSocket() {
+    void closeSocket() {
         try {
             clientSocket.close();
         } catch (IOException e) {
