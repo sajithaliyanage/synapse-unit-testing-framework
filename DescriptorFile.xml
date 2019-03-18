@@ -6,7 +6,7 @@
 
     <test-cases>
         <test-case>
-            <assert-input-payload>
+            <input-payload>
                 <![CDATA[
                         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
                            <soapenv:Header />
@@ -21,17 +21,18 @@
                            </soapenv:Body>
                         </soapenv:Envelope>
                 ]]>
-            </assert-input-payload>
+            </input-payload>
 
-            <assert-expected-properties>
-                {
+            <assertion>
+                <expected-properties>
+                    {
                     "WHERE":"before doing stuff",
                     "SAJITHA":"yes did it"
-                }
-            </assert-expected-properties>
+                    }
+                </expected-properties>
 
-            <assert-expected-payload>
-                <![CDATA[
+                <expected-payload>
+                    <![CDATA[
                     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://services.samples/xsd" xmlns:ser="http://services.samples">
                        <soapenv:Header/>
                        <soapenv:Body>
@@ -46,7 +47,8 @@
                        </soapenv:Body>
                     </soapenv:Envelope>
                 ]]>
-            </assert-expected-payload>
+                </expected-payload>
+            </assertion>
         </test-case>
     </test-cases>
 
