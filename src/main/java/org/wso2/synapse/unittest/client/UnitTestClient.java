@@ -22,7 +22,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Descriptor file read class in unit test framework.
+ * SynapseTestCase file read class in unit test framework.
  */
 public class UnitTestClient {
 
@@ -35,19 +35,33 @@ public class UnitTestClient {
 
         logger.info("Unit testing client started");
 
-        String descriptorFilePath = args[0];
-        String synapseHost = args[1];
-        String synapsePort = args[2];
+        try {
 
-        //process descriptor data for send to the server
-        DescriptorFileReader descriptorReader = new DescriptorFileReader(descriptorFilePath);
-        String deployableMessage = descriptorReader.processArtifactData();
+            if (args.length == 3) {
+                String synapseTestCaseFilePath = args[0];
+                String synapseHost = args[1];
+                String synapsePort = args[2];
 
-        //create tcp connection, send descriptor file to server and get the response from the server
-        TCPClient tcpClient = new TCPClient(synapseHost, synapsePort);
-        tcpClient.writeData(deployableMessage);
-        tcpClient.readData();
-        tcpClient.closeSocket();
+                //process SynapseTestCase data for send to the server
+                String deployableMessage = SynapseTestCaseFileReader.processArtifactData(synapseTestCaseFilePath);
+
+                if (deployableMessage != null) {
+                    //create tcp connection, send SynapseTestCase file to server and get the response from the server
+                    TCPClient tcpClient = new TCPClient(synapseHost, synapsePort);
+                    tcpClient.writeData(deployableMessage);
+                    tcpClient.readData();
+                    tcpClient.closeSocket();
+
+                } else {
+                    logger.error("Error in creating deployable message");
+                }
+            } else {
+                logger.error("Arguments of filepath or host or port not provided");
+            }
+
+        } catch (Exception e) {
+            logger.error("Error while executing client", e);
+        }
 
         logger.info("Unit testing client stopped");
     }

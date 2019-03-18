@@ -2,7 +2,7 @@
 
 <synapse-unit-test>
 
-    <artifact-file>/Users/sajithaliyanage/Documents/Projects/synapse-unit-testing-framework/seq.xml</artifact-file>
+    <artifact-file>SampleTestCases/seq.xml</artifact-file>
 
     <test-cases>
         <test-case>

@@ -1,0 +1,12 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="sequenceTest">
+    <log level="full" />
+    <property name="WHERE" value="before doing stuff"/>
+    <enrich>
+        <source clone="true" type="inline">
+            <xsd:symbol xmlns:xsd="http://services.samples/xsd">SUN</xsd:symbol>
+        </source>
+        <target xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd" action="child" type="custom" xpath="//ser:getQuote/ser:request" />
+    </enrich>
+    <log level="full" />
+    <property name="SAJITHA" value="yes did it"/>
+</sequence>

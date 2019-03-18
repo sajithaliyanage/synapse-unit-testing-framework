@@ -2,7 +2,7 @@
 
 <synapse-unit-test>
     <artifact>
-        <api xmlns="http://ws.apache.org/ns/synapse" name="apiTest234w" context="/order2sw">
+        <api xmlns="http://ws.apache.org/ns/synapse" name="apiTests1" context="/orders1">
             <resource methods="GET" url-mapping="/">
                 <inSequence>
                     <log level="full" />
@@ -23,11 +23,11 @@
     <test-cases>
         <test-case>
             <assert-input-payload>
-                <![CDATA[<?xml version='1.0' encoding='UTF-8' ?>]]>
+                <!--empty-->
             </assert-input-payload>
 
             <assert-expected-properties>
-                <![CDATA[<?xml version='1.0' encoding='UTF-8' ?>]]>
+                <!--empty-->
             </assert-expected-properties>
 
             <assert-expected-payload>
@@ -42,7 +42,7 @@
             <service-name>Hospital</service-name>
             <mock-service-host>localhost</mock-service-host>
             <mock-service-port>9091</mock-service-port>
-            <mock-service-path>/hello/sayHello</mock-service-path>
+            <mock-service-context>/hello/sayHello</mock-service-context>
             <mock-service-type>GET</mock-service-type>
             <mock-service-payload>
                 {
