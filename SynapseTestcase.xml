@@ -1,0 +1,30 @@
+<synapse-unit-test>
+
+    <artifact name="nameOfArtifact">
+
+    </artifact>
+
+    <test-cases>
+        <test-case>
+            <input-payload></input-payload>
+
+            <assertion>
+                <expected-properties></expected-properties>
+                <expected-payload></expected-payload>
+            </assertion>
+        </test-case>
+    </test-cases>
+
+    <mock-services>
+        <mock-service>
+            <service-name></service-name>
+            <mock-service-host></mock-service-host>
+            <mock-service-port></mock-service-port>
+            <mock-service-context></mock-service-context>
+            <mock-service-type></mock-service-type>
+            <mock-service-payload></mock-service-payload>
+            <mock-service-expected-response></mock-service-expected-response>
+        </mock-service>
+    </mock-services>
+
+</synapse-unit-test>

@@ -68,7 +68,7 @@
 
     <test-cases>
         <test-case>
-            <assert-input-payload>
+            <input-payload>
                 <![CDATA[
                         <ArithmaticOperation>
                           <Operation>Add</Operation>
@@ -76,14 +76,15 @@
                           <Arg2>25</Arg2>
                         </ArithmaticOperation>
                 ]]>
-            </assert-input-payload>
+            </input-payload>
 
-            <assert-expected-properties>
-                <![CDATA[<?xml version='1.0' encoding='UTF-8' ?>]]>
-            </assert-expected-properties>
+            <assertion>
+                <expected-properties>
+                    <![CDATA[<?xml version='1.0' encoding='UTF-8' ?>]]>
+                </expected-properties>
 
-            <assert-expected-payload>
-                <![CDATA[<?xml version='1.0' encoding='UTF-8'?>
+                <expected-payload>
+                    <![CDATA[<?xml version='1.0' encoding='UTF-8'?>
                 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
                     <SOAP-ENV:Body>
                         <AddIntegerResponse xmlns="http://tempuri.org">
@@ -91,11 +92,12 @@
                         </AddIntegerResponse>
                     </SOAP-ENV:Body>
                 </SOAP-ENV:Envelope>]]>
-            </assert-expected-payload>
+                </expected-payload>
+            </assertion>
 
         </test-case>
         <test-case>
-            <assert-input-payload>
+            <input-payload>
                 <![CDATA[
                         <ArithmaticOperation>
                           <Operation>Divide</Operation>
@@ -103,14 +105,15 @@
                           <Arg2>5</Arg2>
                         </ArithmaticOperation>
                 ]]>
-            </assert-input-payload>
+            </input-payload>
 
-            <assert-expected-properties>
-                <![CDATA[<?xml version='1.0' encoding='UTF-8' ?>]]>
-            </assert-expected-properties>
+            <assertion>
+                <expected-properties>
+                    <![CDATA[<?xml version='1.0' encoding='UTF-8' ?>]]>
+                </expected-properties>
 
-            <assert-expected-payload>
-                <![CDATA[<?xml version='1.0' encoding='UTF-8'?>
+                <expected-payload>
+                    <![CDATA[<?xml version='1.0' encoding='UTF-8'?>
                 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
                     <SOAP-ENV:Body>
                         <DivideIntegerResponse xmlns="http://tempuri.org">
@@ -118,8 +121,8 @@
                         </DivideIntegerResponse>
                     </SOAP-ENV:Body>
                 </SOAP-ENV:Envelope>]]>
-            </assert-expected-payload>
-
+                </expected-payload>
+            </assertion>
         </test-case>
     </test-cases>
 
